@@ -1,4 +1,3 @@
-# minishell
 # Minishell
 
 ## Introduction
