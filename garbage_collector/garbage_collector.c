@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:25:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/25 23:41:52 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/08/27 05:46:42 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	ft_add_to_memory(t_memory **memory, void *address)
 	t_memory	*last;
 
 	if (!*memory)
+	{
 		*memory = new_memory(address);
 		if (!(*memory))
 			return (0);
+	}
 	else
 	{
 		last = *memory;

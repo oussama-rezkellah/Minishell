@@ -6,13 +6,13 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/27 03:11:19 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/08/27 05:49:28 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char    *get_name (char *env)
+static char    *get_name (char *env)
 {
 	char	*name;
     size_t	len;
@@ -27,7 +27,7 @@ char    *get_name (char *env)
     return (name);
 }
 
-char    *get_value (char *env)
+static char    *get_value (char *env)
 {
     return (ft_strdup_env (ft_strchr(env, '=') + 1));
 }
@@ -44,9 +44,15 @@ void	array_to_lst(char **env, t_env **new_env)
     {
         name = get_name (*env);
         value = get_value (*env);
+		if (!ft_strncmp("SHLVL", name, ft_strlen(name)))
+		{
+			value = ft_strdup_env(ft_itoa(atoi(value) + 1));
+			*env = ft_strjoin ("SHLVL=", value);
+		}
         lst_addback_env (new_env, lstnew_env(value, name, ft_strdup_env(*env)));
         env++;
     }
+	ft_malloc(1, CLEAR);
 }
 
 char	**lst_to_array(t_env *lst_env)

@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/26 05:18:42 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/08/27 05:26:53 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ size_t    lstsize_env(t_env *lst_env);
 
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *str);
-
 char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
 #endif
