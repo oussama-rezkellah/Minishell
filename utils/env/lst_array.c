@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/27 05:49:28 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:36:21 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ static char    *get_value (char *env)
 
 void	array_to_lst(char **env, t_env **new_env)
 {
-    char    *tmp;
     char    *value;
     char    *name;
-    size_t  i;
 
 	*new_env = NULL;
     while (*env)

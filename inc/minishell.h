@@ -6,16 +6,20 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/27 05:26:53 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:28:14 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
-# include "garbage_collector.h"
 # include <unistd.h>
 # include <limits.h>
+# include <libc.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "ft_printf.h"
+# include "garbage_collector.h"
 
 // # define MAL 0
 // # define CLEAR 2

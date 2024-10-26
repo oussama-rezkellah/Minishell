@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:25:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/27 05:46:42 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:30:51 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*malloc_error(int err)
 {
-	printf_fd (2, "bash: malloc: %s\n", strerror(errno));
+	printf_fd (2, "bash: malloc: %s\n", strerror(err));
 	exit (1);
 	return (NULL);
 }
