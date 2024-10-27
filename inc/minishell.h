@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/26 18:28:14 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/27 23:49:42 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,27 @@
 // 	struct s_memory	*next;
 // }	t_memory;
 
+typedef enum e_token
+{
+	PIPE , //1
+	HEREDOC, //2
+	APPEND, //3
+	OUT, //4
+	IN, //5
+	LPR, //6
+	RPR, //7
+	AND, //8
+	OR, //9
+	NOT //10
+}tok;
+
+typedef struct s_toks
+{
+    tok type;
+    char *content;
+    struct s_toks *next;
+}t_lst_toks;
+
 typedef struct s_env
 {
 	char            *env;
@@ -42,7 +63,8 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
-	t_env	*env;
+	t_env		*env;
+	t_lst_toks 	*tokens;
 }	t_minishell;
 
 void	initialise_env (t_env **new_env, char **env);
@@ -54,11 +76,27 @@ void	lst_addback_env(t_env **new_env, t_env *new);
 size_t    lstsize_env(t_env *lst_env);
 
 
+int 	ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *str);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strtrim(char const *s1, char const *set);
+
+tok	get_type (char **str);
+tok	check_type (char *str);
+int	len_unquoted (char *str);
+int	len_quoted (char *str, char quote);
+t_lst_toks	*ft_toknew(void *content, tok type);
+void	add_tok_back(t_lst_toks **lst, t_lst_toks *new);
+t_lst_toks *tokenize (char **str);
+
+
+
+void    parsing(t_minishell *sh,char *input);
 
 #endif

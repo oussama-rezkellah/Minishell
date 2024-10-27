@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 04:23:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:07:15 by orezkell         ###   ########.fr       */
+/*   Created: 2023/11/14 12:30:52 by orezkell          #+#    #+#             */
+/*   Updated: 2024/10/27 21:24:16 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static	int	check_set(char const c, char const *set)
 {
-	size_t	len;
-	char	*new_str;
-	char	*ret;
+	while (*set)
+	{
+		if (*set == c)
+			return (1);
+		set++;
+	}
+	return (0);
+}
 
-	if (!s1 || !s2)
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	char	*ret;
+	size_t	start;
+	size_t	end;
+
+	if (!s1 || !set)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	new_str = (char *)ft_malloc (len, MAL);
-	if (!new_str)
-		return (NULL);
-	ret = new_str;
-	while (*s1)
-		*new_str++ = *s1++;
-	while (*s2)
-		*new_str++ = *s2++;
-	*new_str = 0;
+	start = 0;
+	end = ft_strlen(s1) - 1;
+	while (s1[start] && check_set(s1[start], set))
+		start++;
+	while (end > start && check_set(s1[end], set))
+		end--;
+	ret = ft_malloc (end - start + 2, MAL);
+	ft_strlcpy(ret, s1 + start, end - start + 2);
 	return (ret);
 }

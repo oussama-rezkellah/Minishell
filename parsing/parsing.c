@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstnew_env.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 02:12:11 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:13:27 by orezkell         ###   ########.fr       */
+/*   Created: 2024/10/27 23:53:57 by orezkell          #+#    #+#             */
+/*   Updated: 2024/10/27 23:55:15 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-t_env	*lstnew_env(char *value, char *name, char *env)
+void	parsing(t_minishell *sh, char *input)
 {
-	t_env	*new;
+	char	*line;
 
-	new = (t_env *)ft_malloc (sizeof(t_env), MAL_ENV);
-	new->value = value;
-	new->name = name;
-	new->env = env;
-	new->next = NULL;
-	return (new);
+	line = ft_strtrim (input, " \t\n\v\r\f");
+	free(input);
+	sh->tokens = NULL;
+	sh->tokens = tokenize (&line);
 }
+	// while (sh->tokens)
+	// {	
+	// 	printf ("%d\n",sh->tokens->type);
+	// 	printf ("%s\n",sh->tokens->content);
+	// 	sh->tokens = sh->tokens->next;
+	// }

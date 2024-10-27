@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstnew_env.c                                       :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 02:12:11 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:13:27 by orezkell         ###   ########.fr       */
+/*   Created: 2024/10/26 20:27:15 by orezkell          #+#    #+#             */
+/*   Updated: 2024/10/28 00:06:29 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-t_env	*lstnew_env(char *value, char *name, char *env)
+int	ft_isspace(int c)
 {
-	t_env	*new;
-
-	new = (t_env *)ft_malloc (sizeof(t_env), MAL_ENV);
-	new->value = value;
-	new->name = name;
-	new->env = env;
-	new->next = NULL;
-	return (new);
+	return (c == ' '
+		|| c == '\f'
+		|| c == '\n'
+		|| c == '\r'
+		|| c == '\t'
+		|| c == '\v');
 }

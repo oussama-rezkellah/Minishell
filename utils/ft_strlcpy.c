@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstnew_env.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/26 02:12:11 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:13:27 by orezkell         ###   ########.fr       */
+/*   Created: 2023/11/06 18:43:06 by orezkell          #+#    #+#             */
+/*   Updated: 2024/10/26 20:01:57 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-t_env	*lstnew_env(char *value, char *name, char *env)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	t_env	*new;
+	unsigned int	i;
+	unsigned int	j;
 
-	new = (t_env *)ft_malloc (sizeof(t_env), MAL_ENV);
-	new->value = value;
-	new->name = name;
-	new->env = env;
-	new->next = NULL;
-	return (new);
+	i = 0;
+	while (src[i])
+		i++;
+	if (dstsize < 1)
+		return (i);
+	j = 0;
+	while (src[j] && j < dstsize - 1)
+	{
+		dst[j] = src[j];
+		j++;
+	}
+	dst[j] = 0;
+	return (i);
 }

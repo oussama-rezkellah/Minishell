@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 02:03:04 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/26 02:16:57 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/28 00:11:27 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup_env(const char *s1)
 	char	*p;
 	int		i;
 
-	p = ft_malloc (ft_strlen (s1) + 1 , MAL_ENV);
+	p = ft_malloc (ft_strlen (s1) + 1, MAL_ENV);
 	i = 0;
 	while (s1[i])
 	{
