@@ -6,25 +6,28 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:47:53 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/30 10:26:57 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 03:59:47 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	add_quoted(char **tok, char **str, char quote)
+int	add_quoted(char **tok, char **str, char quote)
 {
 	int		l;
 	int		i;
 	char	*to_join;
 
 	l = len_quoted (*str, quote);
+	if (l < 0)
+		return (0);
 	i = 0;
 	to_join = ft_malloc (l + 1, MAL);
 	while (l - i > 0)
 		to_join[i++] = *((*str)++);
 	to_join[i] = 0;
 	*tok = ft_strjoin (*tok, to_join);
+	return (1);
 }
 
 void	add_unquoted(char **tok, char **str)
@@ -53,7 +56,10 @@ char	*get_content(char **str)
 	while (**str && !ft_isspace(**str) && check_type(*str) == WORD)
 	{
 		if (**str == '"' || **str == '\'')
-			add_quoted(&to_ret, str, **str);
+		{
+			if (!add_quoted(&to_ret, str, **str))
+				return (NULL);
+		}
 		else
 			add_unquoted(&to_ret, str);
 	}
@@ -68,7 +74,11 @@ t_lst_toks	*get_next_tok(char **str)
 	content = NULL;
 	type = get_type(str);
 	if (type == WORD)
+	{
 		content = get_content(str);
+		if (!content)
+			return (NULL);
+	}
 	return (ft_toknew (content, type));
 }
 
@@ -81,6 +91,8 @@ t_lst_toks	*tokenize(char **str)
 	while (**str)
 	{
 		new_node = get_next_tok(str);
+		if (!new_node)
+			return (NULL);
 		add_tok_back(&lst_toks, new_node);
 		while (ft_isspace(**str))
 			(*str)++;

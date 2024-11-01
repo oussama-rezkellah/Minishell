@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:54:01 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:14:14 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 03:33:40 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	print_syntax_error(t_lst_toks *tok)
 		str = "||";
 	else if (tok->type == WORD)
 		str = tok->content;
-	printf("bash: syntax error near unexpected token '%s'\n", str);
+	printf_fd(2, "bash: syntax error near unexpected token '%s'\n", str);
 }
 
 // typedef enum e_token
@@ -108,12 +108,12 @@ int check_syntax(t_lst_toks *lst)
 	}
 	if (paren_count != 0)
 	{
-		printf("bash: syntax error: unclosed parentheses\n");
+		printf_fd(2, "bash: syntax error: unclosed parentheses\n");
 		return (0);
 	}
 	else if (state != 2 && state != 5)
 	{
-		printf("bash: syntax error near unexpected token `newline'\n");
+		printf_fd(2, "bash: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	return (1);

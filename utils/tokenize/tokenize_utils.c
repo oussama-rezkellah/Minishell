@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:44:28 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/30 10:26:57 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 04:02:33 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ tok	check_type (char *str)
 
 int	len_quoted (char *str, char quote)
 {
-	int i = 1;
-	while (str[i] != quote && str[i] )
+	int i = 0;
+	while ((!i || str[i] != quote) && str[i] )
 		i++;
-	if (!*str)
-		return (printf ("error \n"), -1);
+	if (!str[i])
+	{
+		printf_fd(2, "bash: syntax error: unclosed %c\n", quote);
+		return (-1);
+	}
 	i++;
 	return i;
 }

@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:53:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:05:55 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 04:01:12 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	parsing(t_minishell *sh, char *input)
 	free(input);
 	sh->tokens = NULL;
 	sh->tokens = tokenize (&line);
+	if (!sh->tokens)
+		return (0);
 	if (!check_syntax (sh->tokens))
 		return (0);
 	return (1);
