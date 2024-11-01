@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:18:32 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 03:13:07 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	main(int ac, char **av, char **env)
 		if (!input)
 			break ;
 		add_history(input);
-		parsing(&sh, input);
+		if(!parsing(&sh, input))
+		{
+			ft_malloc (0, CLEAR);
+			continue;
+		}
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);

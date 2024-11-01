@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:47:53 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:00:45 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:26:57 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_content(char **str)
 	char	*to_ret;
 
 	to_ret = ft_strdup("");
-	while (**str && !ft_isspace(**str) && check_type(*str) == NOT)
+	while (**str && !ft_isspace(**str) && check_type(*str) == WORD)
 	{
 		if (**str == '"' || **str == '\'')
 			add_quoted(&to_ret, str, **str);
@@ -67,7 +67,7 @@ t_lst_toks	*get_next_tok(char **str)
 
 	content = NULL;
 	type = get_type(str);
-	if (type == NOT)
+	if (type == WORD)
 		content = get_content(str);
 	return (ft_toknew (content, type));
 }

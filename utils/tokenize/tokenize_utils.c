@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:44:28 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/27 23:45:21 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:26:57 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ tok	get_type (char **str)
 	else if (**str == ')')
 		return (*str)++,RPR;
 	else 
-		return NOT;
+		return WORD;
 }
 
 tok	check_type (char *str)
@@ -57,7 +57,7 @@ tok	check_type (char *str)
 	else if (*str == ')')
 		return RPR;
 	else 
-		return NOT;
+		return WORD;
 }
 
 int	len_quoted (char *str, char quote)
@@ -74,7 +74,7 @@ int	len_quoted (char *str, char quote)
 int	len_unquoted (char *str)
 {
 	int i = 0;
-	while (str[i] && !ft_isspace (str[i]) && str[i] != '"' && str[i] != '\'' && check_type(str + i) == NOT)
+	while (str[i] && !ft_isspace (str[i]) && str[i] != '"' && str[i] != '\'' && check_type(str + i) == WORD)
 		i++;
 	return i;
 }

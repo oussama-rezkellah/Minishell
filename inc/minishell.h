@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/27 23:49:42 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 03:05:39 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@
 
 typedef enum e_token
 {
-	PIPE , //1
-	HEREDOC, //2
-	APPEND, //3
-	OUT, //4
-	IN, //5
-	LPR, //6
-	RPR, //7
-	AND, //8
-	OR, //9
-	NOT //10
+	PIPE = 1 , //1
+	HEREDOC = 2, //2
+	APPEND = 3, //3
+	OUT = 4, //4
+	IN = 5, //5
+	LPR = 6, //6
+	RPR = 7, //7
+	AND = 8, //8
+	OR = 9, //9
+	WORD = 10//10
 }tok;
 
 typedef struct s_toks
@@ -94,9 +94,10 @@ int	len_quoted (char *str, char quote);
 t_lst_toks	*ft_toknew(void *content, tok type);
 void	add_tok_back(t_lst_toks **lst, t_lst_toks *new);
 t_lst_toks *tokenize (char **str);
+int check_syntax(t_lst_toks *lst);
 
 
 
-void    parsing(t_minishell *sh,char *input);
+int    parsing(t_minishell *sh,char *input);
 
 #endif
