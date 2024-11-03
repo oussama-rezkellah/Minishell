@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:54:01 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:33:40 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/01 10:14:07 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	print_syntax_error(t_lst_toks *tok)
 
 //bash: syntax error: unclosed parentheses
 
-int	get_state (int prev_state, int tok)
+static int	get_state (int prev_state, int tok)
 {
 	int tr[6][10] = {
 		{0, 3, 3, 3, 3, 4, 0, 0, 0, 2},

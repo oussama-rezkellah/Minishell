@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:27:05 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/25 23:36:27 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/03 14:50:22 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ typedef struct s_memory
 	struct s_memory	*next;
 }	t_memory;
 
-void	*ft_malloc (size_t n, int flag);
+void	*ft_malloc(size_t n, int flag);
 
 #endif

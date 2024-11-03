@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils_1.c                                 :+:      :+:    :+:   */
+/*   build_list_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 23:46:46 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/03 15:02:21 by orezkell         ###   ########.fr       */
+/*   Created: 2024/11/01 10:31:31 by orezkell          #+#    #+#             */
+/*   Updated: 2024/11/03 15:02:48 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_lst_toks	*ft_toknew(void *content, t_tok type)
+t_tree	*ft_nodenew(void *content, t_redir	*redir, t_tok type)
 {
-	t_lst_toks	*new;
+	t_tree	*new;
 
-	new = (t_lst_toks *)ft_malloc (sizeof(t_lst_toks), MAL);
-	new->content = content;
+	new = (t_tree *)ft_malloc (sizeof(t_tree), MAL);
 	new->type = type;
-	new->next = NULL;
+	new->p_cmd = content;
+	new->redir = redir;
+	new->r_child = NULL;
+	new->l_child = NULL;
 	return (new);
 }
 
-void	add_tok_back(t_lst_toks **lst, t_lst_toks *new)
+void	add_node_back(t_tree **lst, t_tree *new)
 {
-	t_lst_toks	*tmp;
+	t_tree	*tmp;
 
 	if (!new || !lst)
 		return ;
@@ -35,8 +37,8 @@ void	add_tok_back(t_lst_toks **lst, t_lst_toks *new)
 		return ;
 	}
 	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	new->next = NULL;
+	while (tmp->r_child)
+		tmp = tmp->r_child;
+	tmp->r_child = new;
+	new->r_child = NULL;
 }

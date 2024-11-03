@@ -6,13 +6,13 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:47:53 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:59:47 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:02:10 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	add_quoted(char **tok, char **str, char quote)
+static int	add_quoted(char **tok, char **str, char quote)
 {
 	int		l;
 	int		i;
@@ -30,7 +30,7 @@ int	add_quoted(char **tok, char **str, char quote)
 	return (1);
 }
 
-void	add_unquoted(char **tok, char **str)
+static void	add_unquoted(char **tok, char **str)
 {
 	int		l;
 	int		i;
@@ -48,7 +48,7 @@ void	add_unquoted(char **tok, char **str)
 	*tok = ft_strjoin (*tok, to_join);
 }
 
-char	*get_content(char **str)
+static char	*get_content(char **str)
 {
 	char	*to_ret;
 
@@ -66,9 +66,9 @@ char	*get_content(char **str)
 	return (to_ret);
 }
 
-t_lst_toks	*get_next_tok(char **str)
+static t_lst_toks	*get_next_tok(char **str)
 {
-	tok		type;
+	t_tok		type;
 	char	*content;
 
 	content = NULL;

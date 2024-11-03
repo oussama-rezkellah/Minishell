@@ -6,13 +6,13 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:44:28 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 04:02:33 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:02:36 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-tok	get_type (char **str)
+t_tok	get_type (char **str)
 {
 	if (**str == '|' && *(*str + 1) == '|')
 		return *str = *str + 2,OR;
@@ -36,7 +36,7 @@ tok	get_type (char **str)
 		return WORD;
 }
 
-tok	check_type (char *str)
+t_tok	check_type (char *str)
 {
 	if (*str == '|' && (*str + 1) == '|')
 		return OR;
