@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:27:53 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/07 13:00:01 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char		*ft_strdup_env(const char *s1);
 t_env		*lstnew_env(char *value, char *name, char *env);
 void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
+char    	*env_get(t_env *env , char *name);
+void		env_set(t_env **env , char *name, char *value);
 
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);

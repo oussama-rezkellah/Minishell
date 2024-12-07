@@ -1,0 +1,91 @@
+"/////////////////////////////////shlvl/////////////////////////////////
+
+
+shlvl()
+{
+    int value = get_value of shlvl ;
+    if (!value   !(*value)  (int)(value) > 999)
+        return => set variable to 1;
+    if (value == 999)
+        return => set an empty shlvl = "";
+    if (value < 0)
+        return => set value to 0 ;
+    else
+        return => increment shlvl;
+}
+
+
+/////////////////////////////////echo/////////////////////////////////
+
+echo ()
+if there is no argument print newline and return ;
+while (there is args check if it an option )
+    skip every valid option  exmp("-nnnnnnnnnnnn" "-n" if there other char that is not n mean its not valid option)
+if there a valid option set a flag to 1 else set it to 0;
+print the given args that its  not an option and between every two print a space " ";
+at finish check if flag is one if yes print newline ;
+
+
+///////////////////////////////// pwd /////////////////////////////////
+
+cwd = getcwd(NULL, 0) => print => free => return ;
+if (!cwd) => perror("getcwd") return ;
+///////////////////////////////// export /////////////////////////////////
+
+    export()
+if there is no args just print;
+else u should iterat args one by one and do the following steps;
+check parse => split by "=" and check the variable name ;
+
+here                    |if null 
+print                    |or the first char is not alphabet and not "" 
+error                    |or the next chars (except the last one ) not alphanemiric and not "" 
+and move to the next    |check the last if "+" its append if not check it if alphanemiric
+
+after parse check
+
+if there is egal in arg export it with a value ;
+{
+    {
+        check append 
+            if the var already_exist join the new value to the old ;
+            else creat it with the new value ;
+    }
+    else there is no egal in arg and the var already exist
+    {
+        if there value is null return dont do anithing ;
+        else set the var to the new value;
+    }
+    else
+        add the var with its value ;
+} 
+
+else if there is no egal ;
+{
+    if the var does not exist 
+        add var with NULL value ;
+}
+///////////////////////////////// unset /////////////////////////////////
+
+    unset ()
+check parse for every var;
+{
+    if the first char is not alphabet and not "";
+    for the rest if its not alphanemiric and not "";
+} if yes printf error and move on;
+
+while (envirement)
+{
+    if !strcmp(envirement->var , var )
+    {
+        hayd had node hhhhhhhh;
+    }
+}
+
+///////////////////////////////// exit  /////////////////////////////////
+            always close files free data befor exiting
+if (there is no args print "exit\n") close files free and exit with (exit status that u have);
+if there args and the first one is not a number 
+    print "numeric argument required\n"close files free and exit with (exit status 255);
+if there is only one arg and its a number assign the number to unsigned char then return it to int and exit with it ;
+else if there is more than one arg and the first is a number print "too many arguments\n" dont exit here ; exit status = 1;"
