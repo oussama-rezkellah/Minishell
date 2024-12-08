@@ -21,6 +21,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <dirent.h>
 # include "ft_printf.h"
 # include "garbage_collector.h"
 
@@ -93,6 +94,18 @@ typedef struct s_minishell
 	int			exit_status;
 }	t_minishell;
 
+int			ft_isnum(char c);
+int			is_1valid(char c);
+int			is_hidden(char first, char *entry);
+char		*expand_var(char *ret, int *i, char *s, t_env *env);
+int			pattern_match(char *entry, char *pattern);
+int			suffix_match(char *entry, char *pattern);
+char		**expand_wildcard(char **old);
+void		expand_cmd(t_tree *node, t_env **env);
+char		*single_q_fill(char *ret, char *s, int *i);
+char		*double_q_fill(char *ret, char *s, int *i, t_env **env);
+char		**remove_all_quotes(char **old);
+int			suffix_match(char *entry, char *pattern);
 char		**ft_split(char *str, char *charset);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*join_char(char *s1, char c);
