@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/07 13:00:01 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:07:47 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 # define MINISHELL_H
 # include <unistd.h>
 # include <limits.h>
-# include <libc.h>
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <string.h>
+# include <fcntl.h>
+# include <signal.h>
 # include "ft_printf.h"
 # include "garbage_collector.h"
 
@@ -60,6 +63,9 @@ typedef struct s_tree
 {
 	t_tok			type;
 	char			*p_cmd;
+	int				in_out[2];
+	int				arr[1024];
+	char			**cmd;
 	t_redir			*redir;
 	struct s_tree	*l_child;
 	struct s_tree	*r_child;
