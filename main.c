@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
+		execution(sh.tree, &sh.env);
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);

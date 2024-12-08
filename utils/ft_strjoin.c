@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferd <aferd@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 04:23:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/10/28 00:07:15 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/07 19:41:53 by aferd            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		*new_str++ = *s2++;
 	*new_str = 0;
 	return (ret);
+}
+
+char	*join_char(char *s1, char c)
+{
+	char	*s2;
+
+	s2 = ft_malloc(sizeof(char) * 2, MAL);
+	s2[0] = c;
+	s2[1] = '\0';
+	return (ft_strjoin(s1, s2));
 }

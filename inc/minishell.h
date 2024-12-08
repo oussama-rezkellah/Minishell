@@ -93,6 +93,11 @@ typedef struct s_minishell
 	int			exit_status;
 }	t_minishell;
 
+char		**ft_split(char *str, char *charset);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*join_char(char *s1, char c);
+void		execution(t_tree *node, t_env **env);
+
 int			exit_status(t_exit flag, int new_exit_status);
 
 void		initialise_env(t_env **new_env, char **env);
