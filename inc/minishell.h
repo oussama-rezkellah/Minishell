@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:27:53 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/10 22:55:08 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_redir
 {
 	t_tok			type;
 	char			*file;
+	int				fd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -60,6 +61,8 @@ typedef struct s_tree
 {
 	t_tok			type;
 	char			*p_cmd;
+	int				fd_in;
+	int				fd_out;
 	t_redir			*redir;
 	struct s_tree	*l_child;
 	struct s_tree	*r_child;
@@ -134,5 +137,12 @@ void		push_s(t_stack	**stack, t_tree *to_push);
 t_tree		*pop_s(t_stack	**stack);
 
 int			parsing(t_minishell *sh, char *input);
+// execution
+void		execution (t_tree *node, t_env **env);
+void		pipe_exec(t_tree *node, t_env **env, int *exit);
+void		cmd_exec(t_tree *node, t_env **env);
+int			open_fill_fds(t_tree *cmd);
+int			handle_exec_err(char *cmd, int errno_val);
+int			ft_heredoc(char *del, t_env *env);
 
 #endif

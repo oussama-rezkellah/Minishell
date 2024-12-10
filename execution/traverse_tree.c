@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse_tree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:30:22 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:05:30 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execution (t_tree *node, t_env **env)
 	if (node->type == AND)
 		return (and_exec(node, env));
 	if (node->type == PIPE)
-		return (pipe_exec(node, env));
+		return (pipe_exec(node, env, NULL));
 	if (node->type == CMD)
 		return (cmd_exec(node, env));
 }

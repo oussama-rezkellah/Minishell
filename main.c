@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/03 14:49:33 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/10 22:54:42 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	main(int ac, char **av, char **env)
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
+		// open all heredocs
+		// execution
+		execution(sh.tree, &(sh.env));
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);
