@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/10 22:54:42 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:01:00 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int ac, char **av, char **env)
 	initialise_env (&sh.env, env);
 	while (1)
 	{
+		int in_copy = dup(STDIN_FILENO);
+		int out_copy = dup(STDOUT_FILENO);
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
@@ -32,9 +34,12 @@ int	main(int ac, char **av, char **env)
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
+		sh.env->pipe_flag = 0;
 		// open all heredocs
 		// execution
 		execution(sh.tree, &(sh.env));
+		dup2(in_copy, STDIN_FILENO);
+		dup2(out_copy, STDOUT_FILENO);
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);

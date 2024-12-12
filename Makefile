@@ -9,7 +9,7 @@ CC = cc
 
 DBUILD = build
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 HEAD = inc/minishell.h
 

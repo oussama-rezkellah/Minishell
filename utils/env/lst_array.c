@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_array.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:13:07 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/11 22:44:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ char	**lst_to_array(t_env *lst_env)
 		env[start] = lst_env->env;
 		lst_env = lst_env->next;
 	}
-	env[++start] = NULL;
+	env[start] = NULL;
 	return (env);
 }

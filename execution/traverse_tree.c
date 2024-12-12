@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/10 18:05:30 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:00:48 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	or_exec(t_tree *node, t_env **env)
 {
 	execution (node->l_child, env);
 	if (exit_status(GET, 0))
-		return (execution(node->l_child, env));
+		return (execution(node->r_child, env));
 }
 
 void	and_exec(t_tree *node, t_env **env)
 {
 	execution (node->l_child, env);
 	if (!exit_status(GET, 0))
-		return (execution(node->l_child, env));
+		return (execution(node->r_child, env));
 }
 
 void	execution (t_tree *node, t_env **env)
@@ -35,7 +35,7 @@ void	execution (t_tree *node, t_env **env)
 	if (node->type == AND)
 		return (and_exec(node, env));
 	if (node->type == PIPE)
-		return (pipe_exec(node, env, NULL));
+		return (pipe_exec(node, env));
 	if (node->type == CMD)
 		return (cmd_exec(node, env));
 }

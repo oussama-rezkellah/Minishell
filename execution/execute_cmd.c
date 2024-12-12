@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/10 23:00:37 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:06:50 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,9 @@ void	execute_external(char **argv, t_env *envp)
 		exit(127);
 	}
 	execve(path, argv, env);
-	if (argv && argv[0] && !argv[0][0])
-		errno = ENOENT;
-	handle_exec_err(argv[0], errno);
+	// if (argv && argv[0] && !argv[0][0])
+	// 	errno = ENOENT;
+	handle_exec_err("nigga", errno);
 	exit(126);
 }
 
@@ -221,22 +221,29 @@ void	cmd_exec(t_tree *node, t_env **env)
 	// test redirections
 	int stat = 0;
 	cmd = ft_split(node->p_cmd, ' ');
-	int pid = fork();
-	if (pid == 0)
+	cmd[1] = NULL;
+	if (node->fd_in != STDIN_FILENO)
 	{
-		if (node->fd_in != STDIN_FILENO)
-		{
-			if (dup2(node->fd_in, STDIN_FILENO) == -1)
-				return ;
-			close(node->fd_in);
-		}
-		if (node->fd_out != STDOUT_FILENO)
-		{
-			if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-				return ;
-			close(node->fd_out);
-		}
-		execute_external(cmd, *env);
+		if (dup2(node->fd_in, STDIN_FILENO) == -1)
+			return;
+		close(node->fd_in);
 	}
-	waitpid(pid, &stat, 0);
+	if (node->fd_out != STDOUT_FILENO)
+	{
+		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
+			return;
+		close(node->fd_out);
+	}
+	printf("flag: %d\n", (*env)->pipe_flag);
+	if ((*env)->pipe_flag == 0)
+	{
+		int pid = fork();
+		fprintf(stderr, "another fork\n");
+		if (pid == 0)
+			execute_external(cmd, *env);
+	}
+	else
+		execute_external(cmd, *env);
+	wait(&stat);
+	exit_status(SET, WEXITSTATUS(stat));
 }

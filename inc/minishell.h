@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/10 22:55:08 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:00:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # define MINISHELL_H
 # include <unistd.h>
 # include <limits.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <ctype.h>
 # include <libc.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -79,6 +82,7 @@ typedef struct s_env
 	char			*env;
 	char			*name;
 	char			*value;
+	int				pipe_flag;
 	struct s_env	*next;
 }	t_env;
 
@@ -139,7 +143,7 @@ t_tree		*pop_s(t_stack	**stack);
 int			parsing(t_minishell *sh, char *input);
 // execution
 void		execution (t_tree *node, t_env **env);
-void		pipe_exec(t_tree *node, t_env **env, int *exit);
+void		pipe_exec(t_tree *node, t_env **env);
 void		cmd_exec(t_tree *node, t_env **env);
 int			open_fill_fds(t_tree *cmd);
 int			handle_exec_err(char *cmd, int errno_val);
