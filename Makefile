@@ -22,7 +22,8 @@ utils/build_tree/build_tree_utils.c utils/build_tree/shunting_utils.c utils/env/
 utils/env/lst_addback_env.c utils/env/lst_array.c utils/env/lstnew_env.c utils/env/lstsize_env.c utils/ft_atoi.c \
 utils/ft_isspace.c utils/ft_itoa.c utils/ft_strchr.c utils/ft_strdup_env.c utils/ft_strjoin.c utils/ft_strlcpy.c \
 utils/ft_strlen.c utils/ft_strncmp.c utils/ft_strtrim.c utils/tokenize/tokenize_utils.c utils/tokenize/tokenize_utils_1.c \
-execution/execute_cmd.c execution/pipe.c execution/redirection_utils.c execution/redirection.c execution/traverse_tree.c utils/exit_status.c
+execution/execute_cmd.c execution/pipe.c execution/redirection_utils.c execution/redirection.c execution/traverse_tree.c \
+utils/exit_status.c execution/handle_heredoc.c
 
 OBJS =  $(addprefix $(DBUILD)/, $(SRCS:.c=.o))
 

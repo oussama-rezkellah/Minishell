@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/11 23:06:50 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/12 23:39:19 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,14 +204,13 @@ void	execute_external(char **argv, t_env *envp)
 	execve(path, argv, env);
 	// if (argv && argv[0] && !argv[0][0])
 	// 	errno = ENOENT;
-	handle_exec_err("nigga", errno);
+	handle_exec_err(NULL, errno);
 	exit(126);
 }
 
 void	cmd_exec(t_tree *node, t_env **env)
 {
 	char **cmd;
-	(void)env;
 	// cmd = expand command
 	// setup redirections
 	node->fd_in = 0;
@@ -238,7 +237,7 @@ void	cmd_exec(t_tree *node, t_env **env)
 	if ((*env)->pipe_flag == 0)
 	{
 		int pid = fork();
-		fprintf(stderr, "another fork\n");
+		fprintf(stderr, "another fork0\n");
 		if (pid == 0)
 			execute_external(cmd, *env);
 	}

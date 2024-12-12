@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/11 23:01:00 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/12 23:30:06 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		sh.env->pipe_flag = 0;
-		// open all heredocs
-		// execution
+		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env));
 		dup2(in_copy, STDIN_FILENO);
 		dup2(out_copy, STDOUT_FILENO);

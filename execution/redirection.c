@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/10 22:55:35 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/13 00:02:47 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,14 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 	}
 	else if (current->type == HEREDOC)
 	{
-		/* TODO
-			HEREDOC LOGIC
-		*/
-		// fd = ft_heredoc(current->file, NULL);
-		if (fd == -1)
-			return (handle_exec_err(current->file, errno), -1);
-		cmd->fd_in = current->fd;
+		if (current ->fd == -1)
+			return (handle_exec_err("heredoc", errno), -1);
+		if (cmd->fd_in > 2)
+			close(cmd->fd_in);
+		cmd->fd_in = dup(current->fd);
+		close(current->fd);
+		fprintf(stderr, "current->fd[%d]\tcurrent->del[%s]\n", current->fd, current->file);
+		fprintf(stderr, "cmd[%s]\tcmd->fd_in[%d]\n", cmd->p_cmd, cmd->fd_in);
 	}
 	return (1);
 }

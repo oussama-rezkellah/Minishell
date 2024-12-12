@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/11 23:00:44 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/12 23:34:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void		pipe_exec(t_tree *node, t_env **env);
 void		cmd_exec(t_tree *node, t_env **env);
 int			open_fill_fds(t_tree *cmd);
 int			handle_exec_err(char *cmd, int errno_val);
+int			open_all_heredocs(t_minishell *sh);
 int			ft_heredoc(char *del, t_env *env);
 
 #endif
