@@ -6,13 +6,13 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 22:58:33 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/13 00:02:58 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:01:05 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
 
-void traverse_cmd_nodes(t_tree *node,t_env *env, void (*open_heredoc)(t_tree *, t_env *))
+void traverse_(t_tree *node,t_env *env, void (*open_heredoc)(t_tree *, t_env *))
 {
 	if (node == NULL)
 		return;
@@ -21,8 +21,8 @@ void traverse_cmd_nodes(t_tree *node,t_env *env, void (*open_heredoc)(t_tree *, 
 		if (open_heredoc != NULL)
 			open_heredoc(node, env);
 	}
-	traverse_cmd_nodes(node->l_child, env, open_heredoc);
-	traverse_cmd_nodes(node->r_child, env, open_heredoc);
+	traverse_(node->l_child, env, open_heredoc);
+	traverse_(node->r_child, env, open_heredoc);
 }
 
 void open_heredoc(t_tree *cmd, t_env *env)
@@ -51,6 +51,6 @@ void open_heredoc(t_tree *cmd, t_env *env)
 
 int open_all_heredocs(t_minishell *sh)
 {
-	traverse_cmd_nodes(sh->tree, sh->env, open_heredoc);
+	traverse_(sh->tree, sh->env, open_heredoc);
 	return (1);
 }

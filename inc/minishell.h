@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/12 23:34:44 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:41:48 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,13 @@ int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strtrim(char const *s1, char const *set);
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strndup(const char *s, size_t n);
+char		*ft_strcpy(char *dest, const char *src);
+char		*ft_strcat(char *dst, const char *src);
+int			ft_isdigit(int c);
+int			ft_isalpha(int c);
+int			ft_isalnum(int c);
 
 t_tok		get_type(char **str);
 t_tok		check_type(char *str);
@@ -149,5 +156,10 @@ int			open_fill_fds(t_tree *cmd);
 int			handle_exec_err(char *cmd, int errno_val);
 int			open_all_heredocs(t_minishell *sh);
 int			ft_heredoc(char *del, t_env *env);
+
+// builtins
+int			is_builtin(char *cmd);
+int			execute_builtin(char **cmd, t_env *env);
+int			export_cmd(char **argv, t_env **env);
 
 #endif

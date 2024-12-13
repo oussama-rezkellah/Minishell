@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/12 23:39:19 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:49:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,17 +210,22 @@ void	execute_external(char **argv, t_env *envp)
 
 void	cmd_exec(t_tree *node, t_env **env)
 {
-	char **cmd;
+	char	**cmd;
+	int		stat;
+
 	// cmd = expand command
+	stat = 0;
+	cmd = ft_split(node->p_cmd, ' ');
 	// setup redirections
 	node->fd_in = 0;
 	node->fd_out = 1;
 	open_fill_fds(node);
 	// handle builtins
-	// test redirections
-	int stat = 0;
-	cmd = ft_split(node->p_cmd, ' ');
-	cmd[1] = NULL;
+	if (is_builtin(cmd[0]))
+	{
+		execute_builtin(cmd, *env);
+		return ;
+	}
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -230,7 +235,7 @@ void	cmd_exec(t_tree *node, t_env **env)
 	if (node->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-			return;
+			return ;
 		close(node->fd_out);
 	}
 	printf("flag: %d\n", (*env)->pipe_flag);
