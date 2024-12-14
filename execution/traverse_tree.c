@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:30:22 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:12:32 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	and_exec(t_tree *node, t_env **env)
 		return (execution(node->l_child, env));
 }
 
-void	execution (t_tree *node, t_env **env)
+void	execution(t_tree *node, t_env **env)
 {
 	if (!node)
 		return ;

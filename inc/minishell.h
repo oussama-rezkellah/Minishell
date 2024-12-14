@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:27:53 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:21:43 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,15 @@ int			exit_status(t_exit flag, int new_exit_status);
 
 void		initialise_env(t_env **new_env, char **env);
 void		array_to_lst(char **env, t_env **new_env);
+void		shlvl(t_env **env);
 char		**lst_to_array(t_env *lst_env);
 char		*ft_strdup_env(const char *s1);
 t_env		*lstnew_env(char *value, char *name, char *env);
+t_env		*create_env (char *value,char *name);
 void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
+char    	*env_get(t_env *env , char *name);
+void		env_set(t_env **env , char *name, char *value);
 
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);
@@ -105,7 +109,7 @@ char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 
 t_tok		get_type(char **str);

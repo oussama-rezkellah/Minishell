@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/01 03:13:07 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:25:22 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,10 @@ void	array_to_lst(char **env, t_env **new_env)
 	{
 		name = get_name (*env);
 		value = get_value (*env);
-		if (!ft_strncmp("SHLVL", name, ft_strlen(name)))
-		{
-			value = ft_strdup_env(ft_itoa(atoi(value) + 1));
-			*env = ft_strjoin ("SHLVL=", value);
-		}
-		lst_addback_env (new_env, lstnew_env(value, name, ft_strdup_env(*env)));
+		lst_addback_env(new_env, create_env(name, value));
 		env++;
 	}
+	shlvl(new_env);
 	ft_malloc(1, CLEAR);
 }
 

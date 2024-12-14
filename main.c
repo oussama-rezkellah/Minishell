@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/03 14:49:33 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:11:10 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	initialise_env (&sh.env, env);
+	t_env *tmp = sh.env;
+	while (tmp)
+	{
+		printf_fd (1, "%s:", tmp->name);
+		printf_fd (1, "%s\n", tmp->value);
+		printf_fd (1, "%s \n", tmp->env);
+		tmp = tmp->next;
+	}
+	exit(0);
 	while (1)
 	{
 		input = readline("minishell$ ");
