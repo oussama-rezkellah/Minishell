@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 # include "../inc/minishell.h"
-# include <libc.h>
 
 static char	*ft_strncpy(char *dst, const char *src, size_t n)
 {

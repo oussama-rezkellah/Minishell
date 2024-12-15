@@ -32,6 +32,8 @@ int	execute_builtin(char **cmd, t_env *env)
 {
 	if (ft_strcmp(cmd[0], "export") == 0)
 		return (export_cmd(cmd + 1, &env));
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		return (echo_cmd(cmd + 1));
 	else
 		printf_fd(2, "%s\n", *cmd);
 	return (1);

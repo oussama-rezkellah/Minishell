@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <ctype.h>
-# include <libc.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "ft_printf.h"
@@ -161,5 +162,6 @@ int			ft_heredoc(char *del, t_env *env);
 int			is_builtin(char *cmd);
 int			execute_builtin(char **cmd, t_env *env);
 int			export_cmd(char **argv, t_env **env);
+int			echo_cmd(char **arguments);
 
 #endif

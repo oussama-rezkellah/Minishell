@@ -18,10 +18,10 @@ int	ft_heredoc(char *del, t_env *env)
 	char	*line;
 	char	*newline;
 	int		fd_in;
-	int		flag;
+	// int		flag;
 
 	(void)env;
-	flag = 1;
+	// flag = 1;
 	fd_in = dup(0);
 	if (pipe(fd) == -1)
 		return (-1);
