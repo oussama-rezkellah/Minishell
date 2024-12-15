@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/13 16:49:54 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:03:20 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,8 @@ void	execute_external(char **argv, t_env *envp)
 		exit(127);
 	}
 	execve(path, argv, env);
-	// if (argv && argv[0] && !argv[0][0])
-	// 	errno = ENOENT;
+	if (argv && argv[0] && !argv[0][0])
+		errno = ENOENT;
 	handle_exec_err(NULL, errno);
 	exit(126);
 }
@@ -212,7 +212,10 @@ void	cmd_exec(t_tree *node, t_env **env)
 {
 	char	**cmd;
 	int		stat;
+	int		pid;
 
+	if (!node)
+		return ;
 	// cmd = expand command
 	stat = 0;
 	cmd = ft_split(node->p_cmd, ' ');
@@ -220,16 +223,14 @@ void	cmd_exec(t_tree *node, t_env **env)
 	node->fd_in = 0;
 	node->fd_out = 1;
 	open_fill_fds(node);
-	// handle builtins
 	if (is_builtin(cmd[0]))
 	{
-		execute_builtin(cmd, *env);
-		return ;
+		return (void)execute_builtin(cmd, *env);
 	}
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
-			return;
+			return ;
 		close(node->fd_in);
 	}
 	if (node->fd_out != STDOUT_FILENO)
@@ -238,16 +239,17 @@ void	cmd_exec(t_tree *node, t_env **env)
 			return ;
 		close(node->fd_out);
 	}
-	printf("flag: %d\n", (*env)->pipe_flag);
 	if ((*env)->pipe_flag == 0)
 	{
-		int pid = fork();
-		fprintf(stderr, "another fork0\n");
+		pid = fork();
 		if (pid == 0)
 			execute_external(cmd, *env);
 	}
-	else
+	else if ((*env)->pipe_flag == 1)
+	{
+		(*env)->pipe_flag = 0;
 		execute_external(cmd, *env);
+	}
 	wait(&stat);
 	exit_status(SET, WEXITSTATUS(stat));
 }

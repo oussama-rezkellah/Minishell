@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/13 16:50:56 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:05:09 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	execute_builtin(char **cmd, t_env *env)
 {
 	if (ft_strcmp(cmd[0], "export") == 0)
 		return (export_cmd(cmd + 1, &env));
+	else
+		printf_fd(2, "%s\n", *cmd);
 	return (1);
 }
 
@@ -53,6 +55,8 @@ void	execution (t_tree *node, t_env **env)
 {
 	if (!node)
 		return ;
+	if (node->type == PIPE && (node->r_child->type == CMD || node->l_child->type == CMD))
+		(*env)->pipe_flag = 0;
 	if (node->type == OR)
 		return (or_exec(node, env));
 	if (node->type == AND)
