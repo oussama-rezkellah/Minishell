@@ -106,6 +106,7 @@ void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
 char		*env_get_var(t_env *env , char *name);
 void		env_set_var(t_env **env , char *name, char *value);
+char		*ft_strjoin_env(char const *s1, char const *s2);
 
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);
