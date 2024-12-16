@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/15 14:05:09 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:05:09 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	and_exec(t_tree *node, t_env **env)
 		return (execution(node->r_child, env));
 }
 
-void	execution (t_tree *node, t_env **env)
+void	execution(t_tree *node, t_env **env)
 {
 	if (!node)
 		return ;
