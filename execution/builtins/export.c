@@ -66,7 +66,7 @@ void set_or_append_env(char *name, char *value, t_mode mode, t_env **env)
 	if (existing)
 	{
 		if (mode == APPEND_MODE && existing->value)
-			existing->value = ft_strjoin(existing->value, value);
+			existing->value = ft_strjoin_env(existing->value, value);
 		else if (mode == SET_MODE && existing->value && value)
 		{
 			existing->value = ft_strdup_env(value);
