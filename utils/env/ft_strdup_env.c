@@ -17,6 +17,8 @@ char	*ft_strdup_env(const char *s1)
 	char	*p;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	p = ft_malloc (ft_strlen (s1) + 1, MAL_ENV);
 	i = 0;
 	while (s1[i])

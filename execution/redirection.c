@@ -17,12 +17,16 @@ int	handle_exec_err(char *cmd, int errno_val)
 	printf_fd(2, "minishell: ");
 	printf_fd(2, cmd);
 	printf_fd(2, ": ");
-	if (errno_val == ENOENT)
-		return (printf_fd(2, "command not found\n"), 127);
-	else if (errno_val == EACCES)
-		return (printf_fd(2, "permission denied\n"), 126);
+	if (errno_val == -69)
+		return (printf_fd(2, "cd: error retrieving current directory: \
+                    getcwd: cannot access parent directories: \
+                    No such file or directory\n"), 1);
+	// if (errno_val == ENOENT)
+	// 	return (printf_fd(2, "command not found\n"), 127);
+	// else if (errno_val == EACCES)
+	// 	return (printf_fd(2, "permission denied\n"), 126);
 	else
-		return (printf_fd(2, strerror(errno_val)), 1);
+		return (printf_fd(2, "%s\n", strerror(errno_val)));
 }
 
 int	is_infile(t_redir *redirect)

@@ -104,6 +104,8 @@ char		*ft_strdup_env(const char *s1);
 t_env		*lstnew_env(char *value, char *name, char *env);
 void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
+char		*env_get_var(t_env *env , char *name);
+void		env_set_var(t_env **env , char *name, char *value);
 
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);
@@ -161,7 +163,11 @@ int			ft_heredoc(char *del, t_env *env);
 // builtins
 int			is_builtin(char *cmd);
 int			execute_builtin(char **cmd, t_env *env);
+void		get_set_cwd(t_exit mode, char *new_cwd, char *old_cwd);
 int			export_cmd(char **argv, t_env **env);
 int			echo_cmd(char **arguments);
+int			cd_cmd(t_env *env, char **argv);
+int			pwd_cmd(char **args);
+int			env_cmd(t_env *env);
 
 #endif

@@ -34,8 +34,17 @@ int	execute_builtin(char **cmd, t_env *env)
 		return (export_cmd(cmd + 1, &env));
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (echo_cmd(cmd + 1));
-	else
-		printf_fd(2, "%s\n", *cmd);
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		return (cd_cmd(env, cmd));
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (pwd_cmd(cmd));
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		return (env_cmd(env), 0);
+	// else if (ft_strcmp(cmd[0], "unset") == 0)
+	// 	return (unset_cmd(&env, cmd + 1));
+	// else if (ft_strcmp(cmd[0], "exit") == 0)
+	// 	return (exit_cmd(cmd + 1, exit_status(0, 0)));
+
 	return (1);
 }
 

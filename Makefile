@@ -9,7 +9,8 @@ CC = cc
 
 DBUILD = build
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g 
+# -fsanitize=address
 
 HEAD = inc/minishell.h
 
@@ -23,7 +24,8 @@ utils/env/lst_addback_env.c utils/env/lst_array.c utils/env/lstnew_env.c utils/e
 utils/ft_isspace.c utils/ft_itoa.c utils/ft_strchr.c utils/ft_strdup_env.c utils/ft_strjoin.c utils/ft_strlcpy.c \
 utils/ft_strlen.c utils/ft_strncmp.c utils/ft_strtrim.c utils/tokenize/tokenize_utils.c utils/tokenize/tokenize_utils_1.c \
 execution/execute_cmd.c execution/pipe.c execution/redirection_utils.c execution/redirection.c execution/traverse_tree.c \
-utils/exit_status.c execution/handle_heredoc.c execution/builtins/export.c
+utils/exit_status.c execution/handle_heredoc.c execution/builtins/export.c execution/builtins/echo.c execution/builtins/pwd.c \
+execution/builtins/cd.c execution/builtins/env.c
 
 OBJS =  $(addprefix $(DBUILD)/, $(SRCS:.c=.o))
 

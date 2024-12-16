@@ -15,7 +15,7 @@
 void traverse_(t_tree *node,t_env *env, void (*open_heredoc)(t_tree *, t_env *))
 {
 	if (node == NULL)
-		return;
+		return ;
 	if (node->type == CMD)
 	{
 		if (open_heredoc != NULL)
