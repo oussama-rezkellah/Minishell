@@ -1,0 +1,147 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+
+// Simple ft_strjoin that creates a new string by joining two strings
+char* ft_strjoin(const char* s1, const char* s2) {
+    if (!s1 && !s2) return NULL;
+    if (!s1) return strdup(s2);
+    if (!s2) return strdup(s1);
+    
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
+    char* result = malloc(len1 + len2 + 1);
+    
+    if (!result) return NULL;
+    
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
+
+// Extract variable name from input string
+int extract_var_name(const char* input, int start, char* var_name) {
+    int j = start;
+    while (isalnum(input[j]) || input[j] == '_') j++;
+    
+    strncpy(var_name, input + start, j - start);
+    var_name[j - start] = '\0';
+    
+    return j;
+}
+
+// Handle quote toggling
+char* handle_quote(char* result, char quote, bool* in_quote, bool* other_quote) {
+    char temp_char[2] = {quote, '\0'};
+    
+    if (!*other_quote) {
+        *in_quote = !*in_quote;
+    }
+    
+    return ft_strjoin(result, temp_char);
+}
+
+// Process a single character
+char* process_char(char* result, const char* input, int* i, 
+                   bool* in_single_quote, bool* in_double_quote) {
+    char* temp = NULL;
+    char temp_char[2] = {0};
+    
+    // Handle single quotes
+    if (input[*i] == '\'' && !*in_double_quote) {
+        temp = handle_quote(result, '\'', in_single_quote, in_double_quote);
+        return temp;
+    }
+    
+    // Handle double quotes
+    if (input[*i] == '"' && !*in_single_quote) {
+        temp = handle_quote(result, '"', in_double_quote, in_single_quote);
+        return temp;
+    }
+    
+    // Handle $VAR format
+    if (input[*i] == '$' && !*in_single_quote) {
+        if (isalpha(input[*i+1]) || input[*i+1] == '_') {
+            char var_name[256];
+            int j = extract_var_name(input, *i + 1, var_name);
+            
+            char* var_value = getenv(var_name);
+            temp = ft_strjoin(result, var_value ? var_value : "");
+            
+            *i = j - 1;
+            return temp;
+
+            if (*in_single_quote) {
+            temp_char[0] = '$';
+            temp = ft_strjoin(result, temp_char);
+            return temp;
+        }
+        
+        // Handle empty string after $
+        if (input[*i+1] == '\0' || input[*i+1] == ' ') {
+            temp_char[0] = '$';
+            temp = ft_strjoin(result, temp_char);
+            return temp;
+        }
+        
+        // Normal environment variable handling
+        if (isalpha(input[*i+1]) || input[*i+1] == '_') {
+            char var_name[256];
+            int j = extract_var_name(input, *i + 1, var_name);
+            
+            char* var_value = getenv(var_name);
+            temp = ft_strjoin(result, var_value ? var_value : "");
+            
+            *i = j - 1;
+            return temp;
+        }
+        
+        // If $ is not followed by a valid variable name, preserve $
+        temp_char[0] = '$';
+        temp = ft_strjoin(result, temp_char);
+        return temp;
+        }
+    }
+    
+    // Regular character
+    temp_char[0] = input[*i];
+    temp = ft_strjoin(result, temp_char);
+    return temp;
+}
+
+// Main replacement function
+char* replace_env_vars(const char* input) {
+    char* result = malloc(1);
+    result[0] = '\0';
+    
+    bool in_single_quote = false;
+    bool in_double_quote = false;
+    
+    for (int i = 0; input[i]; i++) {
+        result = process_char(result, input, &i, 
+                              &in_single_quote, &in_double_quote);
+    }
+    
+    return result;
+}
+
+int main() {
+    setenv("HOME", "/home/user", 1);
+    
+    char* test_inputs[] = {
+        "e'c'"ho" "$USER"",
+        "Hello $USER!",
+        "Path: $HOME/documents",
+        "Mixed '$USER' and \"$UNKNOWN\""
+    };
+    
+    for (int i = 0; i < sizeof(test_inputs)/sizeof(test_inputs[0]); i++) {
+        char* result = replace_env_vars(test_inputs[i]);
+        printf("Original: %s\n", test_inputs[i]);
+        printf("Replaced: %s\n\n", result);
+    }
+    
+    return 0;
+}

@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/14 19:11:10 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/17 02:30:50 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	initialise_env (&sh.env, env);
-	t_env *tmp = sh.env;
-	while (tmp)
-	{
-		printf_fd (1, "%s:", tmp->name);
-		printf_fd (1, "%s\n", tmp->value);
-		printf_fd (1, "%s \n", tmp->env);
-		tmp = tmp->next;
-	}
+	// t_env *tmp = sh.env;
+	// while (tmp)
+	// {
+	// 	printf_fd (1, "%s:", tmp->name);
+	// 	printf_fd (1, "%s\n", tmp->value);
+	// 	// printf_fd (1, "%s \n", tmp->env);
+	// 	tmp = tmp->next;
+	// }
+	char *test = ft_strdup("$\"USER\"$$$");
+	printf ("%s\n",replace_values(&test, sh.env));
 	exit(0);
 	while (1)
 	{
@@ -47,12 +49,3 @@ int	main(int ac, char **av, char **env)
 }
 
 	// TEST for ENV
-
-	// t_env *tmp = sh.env;
-	// while (tmp)
-	// {
-	// 	printf_fd (1, "%s:", tmp->name);
-	// 	printf_fd (1, "%s\n", tmp->value);
-	// 	// printf_fd (1, "%s \n", tmp->env);
-	// 	tmp = tmp->next;
-	// }

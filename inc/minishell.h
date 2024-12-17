@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/14 19:21:43 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/17 02:08:07 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ char    	*env_get(t_env *env , char *name);
 void		env_set(t_env **env , char *name, char *value);
 
 int			ft_isspace(int c);
+int			ft_isalpha(int c);
+int			ft_isalnum(int c);
 char		*ft_strchr(const char *s, int c);
 size_t		ft_strlen(const char *str);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -138,5 +140,6 @@ void		push_s(t_stack	**stack, t_tree *to_push);
 t_tree		*pop_s(t_stack	**stack);
 
 int			parsing(t_minishell *sh, char *input);
+char		*replace_values(char **str, t_env *env);
 
 #endif
