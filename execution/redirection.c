@@ -6,28 +6,11 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/13 00:02:47 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:52:56 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	handle_exec_err(char *cmd, int errno_val)
-{
-	printf_fd(2, "minishell: ");
-	printf_fd(2, cmd);
-	printf_fd(2, ": ");
-	if (errno_val == -69)
-		return (printf_fd(2, "cd: error retrieving current directory: \
-                    getcwd: cannot access parent directories: \
-                    No such file or directory\n"), 1);
-	// if (errno_val == ENOENT)
-	// 	return (printf_fd(2, "command not found\n"), 127);
-	// else if (errno_val == EACCES)
-	// 	return (printf_fd(2, "permission denied\n"), 126);
-	else
-		return (printf_fd(2, "%s\n", strerror(errno_val)));
-}
 
 int	is_infile(t_redir *redirect)
 {
@@ -97,8 +80,6 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 			close(cmd->fd_in);
 		cmd->fd_in = dup(current->fd);
 		close(current->fd);
-		fprintf(stderr, "current->fd[%d]\tcurrent->del[%s]\n", current->fd, current->file);
-		fprintf(stderr, "cmd[%s]\tcmd->fd_in[%d]\n", cmd->p_cmd, cmd->fd_in);
 	}
 	return (1);
 }
@@ -106,7 +87,7 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 int	open_fill_fds(t_tree *cmd)
 {
 	t_redir	*current;
-	int			ret;
+	int		ret;
 
 	ret = 1;
 	current = cmd->redir;

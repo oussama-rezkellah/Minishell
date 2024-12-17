@@ -6,11 +6,11 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/15 14:03:20 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:42:53 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/minishell.h"
+#include "../inc/minishell.h"
 
 static char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
@@ -41,7 +41,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	s_len = ft_strlen(s);
 	if (len == 0 || start >= s_len)
 	{
-		empty_str = (char *)malloc(1);
+		empty_str = (char *)ft_malloc(1, MAL);
 		if (!empty_str)
 			return (NULL);
 		if (empty_str)
@@ -50,7 +50,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (len > s_len - start)
 		len = s_len - start;
-	sub_str = (char *)malloc(len + 1);
+	sub_str = (char *)ft_malloc(len + 1, MAL);
 	if (!sub_str)
 		return (NULL);
 	ft_strncpy(sub_str, s + start, len);
@@ -75,19 +75,6 @@ static size_t	substr_counter(char const *s, char c)
 			ptr++;
 	}
 	return (num_of_substrs);
-}
-
-static void	dealloc(char **s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		free(s[i]);
-		i++;
-	}
-	free (s);
 }
 
 static char	*alloc(const char *str, char c, int *i)
@@ -120,7 +107,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	sub_count = substr_counter(s, c);
-	ret = (char **)malloc(sizeof(char *) * (sub_count + 1));
+	ret = (char **)ft_malloc(sizeof(char *) * (sub_count + 1, MAL));
 	if (!ret)
 		return (NULL);
 	while (n < sub_count && *s)
@@ -128,7 +115,6 @@ char	**ft_split(char const *s, char c)
 		ret[n] = alloc(s, c, &i);
 		if (!ret[n])
 		{
-			dealloc(ret);
 			return (NULL);
 		}
 		n++;
@@ -206,6 +192,7 @@ void	execute_external(char **argv, t_env *envp)
 	handle_exec_err(NULL, errno);
 	exit(126);
 }
+int	handle_redirections(t_tree *node);
 
 void	cmd_exec(t_tree *node, t_env **env)
 {
@@ -218,26 +205,13 @@ void	cmd_exec(t_tree *node, t_env **env)
 	// cmd = expand command
 	stat = 0;
 	cmd = ft_split(node->p_cmd, ' ');
-	// setup redirections
 	node->fd_in = 0;
 	node->fd_out = 1;
 	open_fill_fds(node);
 	if (is_builtin(cmd[0]))
-	{
-		return (void)execute_builtin(cmd, *env);
-	}
-	if (node->fd_in != STDIN_FILENO)
-	{
-		if (dup2(node->fd_in, STDIN_FILENO) == -1)
-			return ;
-		close(node->fd_in);
-	}
-	if (node->fd_out != STDOUT_FILENO)
-	{
-		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-			return ;
-		close(node->fd_out);
-	}
+		return ((void)execute_builtin(cmd, *env));
+	if (handle_redirections(node) == -1)
+		return ;
 	if ((*env)->pipe_flag == 0)
 	{
 		pid = fork();

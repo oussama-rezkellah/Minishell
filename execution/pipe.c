@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/15 13:53:05 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:45:21 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 	dprintf(2, "Left child\n");
 	pid = fork();
 	if (pid < 0)
-		return pid;
+		return (pid);
 	else if (pid == 0)
 	{
 		close(pipe_fd[0]);
@@ -32,6 +32,7 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 	}
 	return (pid);
 }
+
 int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 {
 	int	pid;
@@ -41,7 +42,7 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 	dprintf(2, "Right child\n");
 	pid = fork();
 	if (pid < 0)
-		return pid;
+		return (pid);
 	else if (pid == 0)
 	{
 		close(pipe_fd[1]);
@@ -53,12 +54,13 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 	return (pid);
 }
 
-void pipe_exec(t_tree *node, t_env **env)
+void	pipe_exec(t_tree *node, t_env **env)
 {
-	int	l_child;
-    int	r_child;
+	int		l_child;
+	int		r_child;
 	int		pipe_fd[2];
 	int		status;
+	int		pid;
 
 	(*env)->pipe_flag = 1;
 	if (pipe(pipe_fd) < 0)
@@ -69,10 +71,10 @@ void pipe_exec(t_tree *node, t_env **env)
 		return ;
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	while (wait(&status) != -1)
-		;
-	// waitpid(l_child, &status, 0);
-	// waitpid(r_child, &status, 0);
+	while ((pid = wait(&status)) > 0)
+	{
+		if (pid == l_child || pid == r_child)
+			exit_status(SET, WEXITSTATUS(status));
+	}
 	exit_status(SET, WEXITSTATUS(status));
 }
-
