@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 00:05:09 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:01:38 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	execute_builtin(char **cmd, t_env *env)
 		return (env_cmd(env), 0);
 	// else if (ft_strcmp(cmd[0], "unset") == 0)
 	// 	return (unset_cmd(&env, cmd + 1));
-	// else if (ft_strcmp(cmd[0], "exit") == 0)
-	// 	return (exit_cmd(cmd + 1, exit_status(0, 0)));
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (exit_cmd(cmd + 1, exit_status(0, 0)));
 
 	return (1);
 }

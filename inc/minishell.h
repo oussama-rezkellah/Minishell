@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 00:27:58 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:00:47 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ int			echo_cmd(char **arguments);
 int			cd_cmd(t_env *env, char **argv);
 int			pwd_cmd(char **args);
 int			env_cmd(t_env *env);
+int			exit_cmd(char **argv, int exit_status);
 
 #endif

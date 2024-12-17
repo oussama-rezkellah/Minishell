@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 06:50:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:48:52 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	go_home(t_env *env)
 	return (1);
 }
 
-void    handle_cd_failure(char *new, char *current_wd, t_env *env)
+void	handle_cd_failure(char *new, char *current_wd, t_env *env)
 {
 	char *joined;
 
