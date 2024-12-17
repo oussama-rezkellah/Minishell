@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 08:48:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:26:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	go_home(t_env *env)
 
 void	handle_cd_failure(char *new, char *current_wd, t_env *env)
 {
-	char *joined;
+	char	*joined;
 
 	get_set_cwd(GET, NULL, &current_wd);
 	env_set(&env, "OLDPWD", current_wd);
@@ -66,14 +66,15 @@ int	cd_cmd(t_env *env, char **argv)
 	get_set_cwd(GET, NULL, &cwd);
 	flag = getcwd(NULL, 0);
 	if (flag && change == 0)
-		return (env_set(&env, "OLDPWD", cwd),env_set(&env, "PWD", flag), \
+		return (env_set(&env, "OLDPWD", cwd), env_set(&env, "PWD", flag), \
 				get_set_cwd(SET, flag, NULL), free(flag), 0);
 	else if (!flag || change == -1)
 	{
 		if ((!ft_strcmp(new, ".") || !ft_strcmp(new, "..")) && !change)
 			return (handle_cd_failure(new, cwd, env), 1);
 		else if (change == -1)
-			return (handle_exec_err(ft_strjoin("cd: ", argv[1]), errno), free(flag), 1);
+			return (handle_exec_err(ft_strjoin("cd: ", argv[1]), errno), \
+			free(flag), 1);
 	}
 	return (free(flag), 0);
 }

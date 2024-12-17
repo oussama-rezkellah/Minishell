@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 09:00:05 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:29:07 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	exit_cmd(char **argv, int exit_status)
 	long long	exit_;
 
 	if (!argv[0])
-		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(exit_status), 1);
+		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), \
+		exit(exit_status), 1);
 	if (valid_arg(argv[0], &exit_))
 	{
 		if (argv[1])
@@ -65,9 +66,8 @@ int	exit_cmd(char **argv, int exit_status)
 	}
 	else
 	{
-		return (printf_fd(2, "exit\nexit: %s: numeric argument required\n", argv[0]), \
-		ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(255), 1);
+		return (printf_fd(2, "exit\nexit: %s: numeric argument required\n", \
+		argv[0]), ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(255), 1);
 	}
 	return (0);
 }
-

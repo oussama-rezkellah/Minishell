@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 09:00:47 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:36:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,13 @@ typedef enum e_token
 	CMD = 11
 }		t_tok;
 
-typedef enum	s_exit_status
+typedef enum s_mode
+{
+	APPEND_MODE,
+	SET_MODE
+}			t_mode;
+
+typedef enum s_exit_status
 {
 	SET,
 	GET,
@@ -105,10 +111,10 @@ void		shlvl(t_env **env);
 char		**lst_to_array(t_env *lst_env);
 char		*ft_strdup_env(const char *s1);
 t_env		*lstnew_env(char *value, char *name, char *env);
-t_env		*create_env (char *value,char *name);
+t_env		*create_env(char *value,char *name);
 void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
-char    	*env_get(t_env *env , char *name);
+char		*env_get(t_env *env , char *name);
 void		env_set(t_env **env , char *name, char *value);
 
 int			ft_isspace(int c);
@@ -156,7 +162,7 @@ t_tree		*pop_s(t_stack	**stack);
 
 int			parsing(t_minishell *sh, char *input);
 // execution
-void		execution (t_tree *node, t_env **env);
+void		execution(t_tree *node, t_env **env);
 void		pipe_exec(t_tree *node, t_env **env);
 void		cmd_exec(t_tree *node, t_env **env);
 int			open_fill_fds(t_tree *cmd);
@@ -168,11 +174,13 @@ int			ft_heredoc(char *del, t_env *env);
 int			is_builtin(char *cmd);
 int			execute_builtin(char **cmd, t_env *env);
 void		get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd);
+int			is_valid_name(char *name);
 int			export_cmd(char **argv, t_env **env);
 int			echo_cmd(char **arguments);
 int			cd_cmd(t_env *env, char **argv);
 int			pwd_cmd(char **args);
 int			env_cmd(t_env *env);
 int			exit_cmd(char **argv, int exit_status);
+int			unset_cmd(t_env **env, char **argv);
 
 #endif

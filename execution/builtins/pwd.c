@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 09:41:00 by aben-hss          #+#    #+#             */
+/*   Updated: 2024/12/17 09:41:03 by aben-hss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void    get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd)
+void	get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd)
 {
-	static char *cwd = NULL;
-	char    *tmp;
+	static char	*cwd;
+	char		*tmp;
 
 	if (!cwd)
 	{
@@ -26,10 +37,10 @@ void    get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd)
 
 int	pwd_cmd(char **args)
 {
-	char    *cwd;
+	char	*cwd;
 
 	if (args[1] != NULL)
-		return(printf_fd(2, "pwd: too many arguments\n"), 1);
+		return (printf_fd(2, "pwd: too many arguments\n"), 1);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
