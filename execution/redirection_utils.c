@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/10 22:42:50 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 06:51:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_heredoc(char *del, t_env *env)
 		line = readline("> ");
 		// check for g_heredoc_sig
 		// break if so
-		if (!line || !ft_strncmp(line, del, strlen(del)))
+		if (!line || !ft_strcmp(line, del))
 			return (free(line), close(fd_in), close(fd[1]), fd[0]);
 		// TODO logic for heredoc expansion
 		// if (!flag)

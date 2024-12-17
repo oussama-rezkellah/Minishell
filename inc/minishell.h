@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 00:04:51 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:27:58 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <ctype.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdio.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "ft_printf.h"
@@ -115,6 +117,7 @@ size_t		ft_strlen(const char *str);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin_env(char const *s1, char const *s2);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 char		*ft_strtrim(char const *s1, char const *set);
@@ -164,7 +167,7 @@ int			ft_heredoc(char *del, t_env *env);
 // builtins
 int			is_builtin(char *cmd);
 int			execute_builtin(char **cmd, t_env *env);
-void		get_set_cwd(t_exit mode, char *new_cwd, char *old_cwd);
+void		get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd);
 int			export_cmd(char **argv, t_env **env);
 int			echo_cmd(char **arguments);
 int			cd_cmd(t_env *env, char **argv);

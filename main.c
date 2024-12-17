@@ -6,11 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/12 23:30:06 by aben-hss         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/14 19:11:10 by orezkell         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2024/12/17 00:34:50 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +21,15 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	initialise_env (&sh.env, env);
-	t_env *tmp = sh.env;
-	while (tmp)
-	{
-		printf_fd (1, "%s:", tmp->name);
-		printf_fd (1, "%s\n", tmp->value);
-		printf_fd (1, "%s \n", tmp->env);
-		tmp = tmp->next;
-	}
-	exit(0);
+	// t_env *tmp = sh.env;
+	// while (tmp)
+	// {
+	// 	printf_fd (1, "%s:", tmp->name);
+	// 	printf_fd (1, "%s\n", tmp->value);
+	// 	printf_fd (1, "%s \n", tmp->env);
+	// 	tmp = tmp->next;
+	// }
+	// exit(0);
 	while (1)
 	{
 		int in_copy = dup(STDIN_FILENO);

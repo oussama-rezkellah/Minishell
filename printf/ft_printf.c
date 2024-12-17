@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 03:55:38 by orezkell          #+#    #+#             */
-/*   Updated: 2024/08/25 23:36:58 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/17 04:29:01 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	printf_fd(int fd, const char *str, ...)
 	if (write(fd, "", 0) == -1)
 		return (-1);
 	va_start (args, str);
-	while (*str)
+	while (str && *str)
 	{
 		if (*str == '%')
 		{
