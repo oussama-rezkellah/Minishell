@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 22:58:33 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 10:32:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:07:33 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	open_heredoc(t_tree *cmd, t_env *env)
 		if (current->type == HEREDOC)
 		{
 			current->fd = ft_heredoc(current->file, env);
+			if (g_heredoc_signal == 1)
+				return ;
 			if (current ->fd == -1)
 			{
 				handle_exec_err("heredoc", errno);

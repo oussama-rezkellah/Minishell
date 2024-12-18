@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 09:36:54 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:01:06 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # include <readline/history.h>
 # include "ft_printf.h"
 # include "garbage_collector.h"
+# include <signal.h>
+# include <string.h>
+# include <termios.h>
+# include <sys/param.h>
 
 typedef enum e_token
 {
@@ -103,6 +107,13 @@ typedef struct s_minishell
 	int			exit_status;
 }	t_minishell;
 
+int			g_heredoc_signal;
+
+void		signals_init(void);
+void		heredoc_sigint(int sig);
+void		handle_sigint(int signal);
+int			ft_wait(int l_pid, int r_pid, int *status);
+
 int			exit_status(t_exit flag, int new_exit_status);
 
 void		initialise_env(t_env **new_env, char **env);
@@ -111,11 +122,11 @@ void		shlvl(t_env **env);
 char		**lst_to_array(t_env *lst_env);
 char		*ft_strdup_env(const char *s1);
 t_env		*lstnew_env(char *value, char *name, char *env);
-t_env		*create_env(char *value,char *name);
+t_env		*create_env(char *value, char *name);
 void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
-char		*env_get(t_env *env , char *name);
-void		env_set(t_env **env , char *name, char *value);
+char		*env_get(t_env *env, char *name);
+void		env_set(t_env **env, char *name, char *value);
 
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);

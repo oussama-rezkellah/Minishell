@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 10:45:21 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/18 05:11:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	pipe_exec(t_tree *node, t_env **env)
 	int		r_child;
 	int		pipe_fd[2];
 	int		status;
-	int		pid;
 
 	(*env)->pipe_flag = 1;
 	if (pipe(pipe_fd) < 0)
@@ -71,10 +70,6 @@ void	pipe_exec(t_tree *node, t_env **env)
 		return ;
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	while ((pid = wait(&status)) > 0)
-	{
-		if (pid == l_child || pid == r_child)
-			exit_status(SET, WEXITSTATUS(status));
-	}
-	exit_status(SET, WEXITSTATUS(status));
+	exit_status(SET, ft_wait(l_child, r_child, &status));
 }
+

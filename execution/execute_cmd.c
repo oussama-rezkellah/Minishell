@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 10:42:53 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:38:05 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	sub_count = substr_counter(s, c);
-	ret = (char **)ft_malloc(sizeof(char *) * (sub_count + 1, MAL));
+	ret = (char **)ft_malloc(sizeof(char *) * (sub_count + 1), MAL);
 	if (!ret)
 		return (NULL);
 	while (n < sub_count && *s)
@@ -177,18 +177,18 @@ void	execute_external(char **argv, t_env *envp)
 	char	*path;
 	char	**env;
 
-	// signal(SIGQUIT, SIG_DFL);
-	// signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	env = lst_to_array(envp);
 	path = find_command_path(argv[0], env);
 	if (!path)
 	{
-		handle_exec_err(argv[0], ENOENT);
+		handle_exec_err(argv[0], -127);
 		exit(127);
 	}
 	execve(path, argv, env);
 	if (argv && argv[0] && !argv[0][0])
-		errno = ENOENT;
+		errno = -127;
 	handle_exec_err(NULL, errno);
 	exit(126);
 }
@@ -204,10 +204,12 @@ void	cmd_exec(t_tree *node, t_env **env)
 		return ;
 	// cmd = expand command
 	stat = 0;
+	pid = -1;
 	cmd = ft_split(node->p_cmd, ' ');
 	node->fd_in = 0;
 	node->fd_out = 1;
-	open_fill_fds(node);
+	if (open_fill_fds(node) == -1)
+		return ;
 	if (is_builtin(cmd[0]))
 		return ((void)execute_builtin(cmd, *env));
 	if (handle_redirections(node) == -1)
@@ -223,6 +225,5 @@ void	cmd_exec(t_tree *node, t_env **env)
 		(*env)->pipe_flag = 0;
 		execute_external(cmd, *env);
 	}
-	wait(&stat);
-	exit_status(SET, WEXITSTATUS(stat));
+	exit_status(SET, ft_wait(pid, pid, &stat));
 }

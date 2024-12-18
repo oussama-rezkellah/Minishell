@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 10:20:31 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:26:42 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ int	ft_heredoc(char *del, t_env *env)
 	fd_in = dup(0);
 	if (pipe(fd) == -1)
 		return (-1);
-	// register signal
-
+	signal(SIGINT, heredoc_sigint);
 	// determine expand flag
 	// del = expand_flag(del, &flag);
 	while (1)
 	{
 		line = readline("> ");
-		// check for g_heredoc_sig
-		// break if so
+		if (g_heredoc_signal)
+			break ;
 		if (!line || !ft_strcmp(line, del))
 			return (free(line), close(fd_in), close(fd[1]), fd[0]);
 		// TODO logic for heredoc expansion
@@ -47,8 +46,9 @@ int	ft_heredoc(char *del, t_env *env)
 		write(fd[1], "\n", 1);
 		free(line);
 	}
-	// check for g_heredoc_sig
-	// free and close all
+	if (g_heredoc_signal == 1)
+		return ((dup2(fd_in, 0), close(fd_in), free(line), close(fd[1]),
+				close(fd[0]), -2));
 	return (free(line), close(fd[1]), fd[0]);
 }
 
@@ -61,7 +61,7 @@ int	handle_exec_err(char *cmd, int errno_val)
 		return (printf_fd(2, "cd: error retrieving current directory: \
 		getcwd: cannot access parent directories: No such file or \
 		directory\n"), 1);
-	if (errno_val == ENOENT)
+	if (errno_val == -127)
 		return (printf_fd(2, "command not found\n"), 127);
 	else if (errno_val == EACCES)
 		return (printf_fd(2, "permission denied\n"), 126);
@@ -75,7 +75,6 @@ int	handle_redirections(t_tree *node)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 		{
-			handle_exec_err("input redirection", errno);
 			return (-1);
 		}
 		close(node->fd_in);
@@ -84,7 +83,6 @@ int	handle_redirections(t_tree *node)
 	{
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 		{
-			handle_exec_err("output redirection", errno);
 			return (-1);
 		}
 		close(node->fd_out);
