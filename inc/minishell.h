@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 02:08:07 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:56:54 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ t_tree		*pop_s(t_stack	**stack);
 
 int			parsing(t_minishell *sh, char *input);
 char		*replace_values(char **str, t_env *env);
+char		**split_cmd(char *s);
 
 #endif
