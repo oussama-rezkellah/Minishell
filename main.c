@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/18 21:04:10 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:29:49 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,47 @@ char **split_cmd(char *s)
 	return ret;
 }
 
+char *process_char_1(char *to_ret, char *str, int i, int *s_q, int *d_q) {
+    char *tmp;
+
+	tmp = ft_strdup(" ");
+    if (str[i] == '\'' && !*d_q) {
+        *s_q = !*s_q;
+        return (to_ret);
+    }
+    if (str[i] == '"' && !*s_q) {
+        *d_q = !*d_q;
+        return (to_ret);
+    }
+    if (str[i] == '$' && (str[i+1] == '"' || str[i+1] == '\'') && !*s_q && !*d_q)
+        return (to_ret);
+	tmp[0] = str[i];
+	return (ft_strjoin(to_ret, tmp));
+}
+
+char *remove_q_line(char *str)
+{
+    char *to_ret = ft_strdup("");
+	int s_q = 0;
+	int d_q = 0;
+    size_t i = -1;
+
+	while (str[++i])
+		to_ret = process_char_1(to_ret, str, i, &s_q, &d_q);
+	return (to_ret);
+}
+
+char **remove_q_cmd(char **cmd)
+{
+    char **tmp;
+    size_t i = -1;
+
+	tmp = cmd;
+    while (tmp[++i])
+        tmp[i] = remove_q_line(tmp[i]);
+	return (tmp);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	sh;
@@ -177,7 +218,7 @@ int	main(int ac, char **av, char **env)
 	// 	tmp = tmp->next;
 	// }
 	char *test = ft_strdup("$\"USER    \"$$$ 'te  st'ou ss");
-	char **test1 = split_cmd (replace_values(&test, sh.env));
+	char **test1 = remove_q_cmd(split_cmd (replace_values(&test, sh.env)));
 	while (*test1)
 	{
 		printf("%s\n", *test1);
