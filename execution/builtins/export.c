@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 10:28:09 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/20 02:19:38 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_or_append_env(char *name, char *value, t_mode mode, t_env **env)
 		if (value)
 			value = ft_strdup_env(value);
 		full_var = get_full_var(name, value);
-		new_entry = lstnew_env(value, ft_strdup_env(name), full_var);
+		new_entry = lstnew_env(ft_strdup_env(name), value, full_var);
 		lst_addback_env(env, new_entry);
 	}
 }

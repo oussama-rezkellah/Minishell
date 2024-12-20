@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:27:14 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 09:27:17 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/20 02:10:43 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	flag_check(char *str)
 		return (-1);
 	if (str[j] == '-')
 		j++;
+	if (!str[j])
+		return (0);
 	while (str[j] == 'n')
 		j++;
 	if (str[j] == '\0')
