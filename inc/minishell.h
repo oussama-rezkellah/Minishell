@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/19 22:21:20 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/20 02:40:03 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ char		*ft_strcat(char *dst, const char *src);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
+char		**ft_split(char const *s, char c);
 
 t_tok		get_type(char **str);
 t_tok		check_type(char *str);
@@ -179,6 +180,12 @@ int			open_fill_fds(t_tree *cmd);
 int			handle_exec_err(char *cmd, int errno_val);
 int			open_all_heredocs(t_minishell *sh);
 int			ft_heredoc(char *del, t_env *env);
+
+//expnad
+char *replace_values(char **str, t_env *env);
+char **ft_expand(t_tree *node, t_env *env);
+char **split_cmd(char *s);
+char **remove_q_cmd(char **cmd);
 
 // builtins
 int			is_builtin(char *cmd);
