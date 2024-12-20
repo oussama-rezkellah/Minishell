@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 09:33:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:11:50 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-		"exit", NULL};
+		"exit", "$?", NULL};
 	int			i;
 
 	i = 0;
@@ -30,22 +30,27 @@ int	is_builtin(char *cmd)
 
 int	execute_builtin(char **cmd, t_env *env)
 {
+	int exit_;
+
 	if (ft_strcmp(cmd[0], "export") == 0)
-		return (export_cmd(cmd + 1, &env));
+		exit_ =  (export_cmd(cmd + 1, &env));
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (echo_cmd(cmd + 1));
+		exit_ =  (echo_cmd(cmd + 1));
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		return (cd_cmd(env, cmd));
+		exit_ =  (cd_cmd(env, cmd));
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (pwd_cmd(cmd));
+		exit_ =  (pwd_cmd(cmd));
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (env_cmd(env), 0);
+		exit_ =  (env_cmd(env), 0);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		return (unset_cmd(&env, cmd + 1));
+		exit_ =  (unset_cmd(&env, cmd + 1));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		return (exit_cmd(cmd + 1, exit_status(0, 0)));
+		exit_ =  (exit_cmd(cmd + 1, exit_status(0, 0)));
+	else if (ft_strcmp(cmd[0], "$?") == 0)
+		exit_ =  (printf_fd(2, "%d\n", exit_status(GET, 0)));
 	else
-		return (1);
+		exit_ =  (1);
+	return (exit_);
 }
 
 void	or_exec(t_tree *node, t_env **env)
@@ -66,9 +71,6 @@ void	execution(t_tree *node, t_env **env)
 {
 	if (!node)
 		return ;
-	if (node->type == PIPE && (node->r_child->type == CMD || \
-	node->l_child->type == CMD))
-		(*env)->pipe_flag = 0;
 	if (node->type == OR)
 		return (or_exec(node, env));
 	if (node->type == AND)

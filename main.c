@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/18 05:10:03 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:35:43 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,32 @@ int	main(int ac, char **av, char **env)
 		return (perror("termios"), 1);
 	while (1)
 	{
-		int in_copy = dup(STDIN_FILENO);
-		int out_copy = dup(STDOUT_FILENO);
 		signals_init();
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
 		if (!input[0])
 			continue ;
+
+
+
+
 		add_history(input);
 		if (!parsing(&sh, input))
 		{
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
-		sh.env->pipe_flag = 0;
+
+		int in_copy = dup(STDIN_FILENO);
+		int out_copy = dup(STDOUT_FILENO);
+
 		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env));
 		dup2(in_copy, STDIN_FILENO);
 		dup2(out_copy, STDOUT_FILENO);
+		close(in_copy);
+		close(out_copy);
 		if (g_heredoc_signal != 1 && isatty(0) && tcsetattr(0, TCSANOW, &save))
 			perror("termios");
 		ft_malloc (0, CLEAR);

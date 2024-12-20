@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/18 05:11:44 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:59:50 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
-	dprintf(2, "Left child\n");
 	pid = fork();
 	if (pid < 0)
 		return (pid);
@@ -39,7 +38,6 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
-	dprintf(2, "Right child\n");
 	pid = fork();
 	if (pid < 0)
 		return (pid);
@@ -61,7 +59,7 @@ void	pipe_exec(t_tree *node, t_env **env)
 	int		pipe_fd[2];
 	int		status;
 
-	(*env)->pipe_flag = 1;
+	// (*env)->pipe_flag = 1;
 	if (pipe(pipe_fd) < 0)
 		return ;
 	l_child = execute_l_child(node->l_child, pipe_fd, *env);

@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/18 03:01:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:21:20 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_env
 	char			*env;
 	char			*name;
 	char			*value;
-	int				pipe_flag;
 	struct s_env	*next;
 }	t_env;
 

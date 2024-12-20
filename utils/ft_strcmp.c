@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:25:24 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/13 14:36:24 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:18:59 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+	{
+		if (s1 == s2)
+			return (0);
+		else if (s1 == NULL)
+			return (-1);
+		else
+			return (1);
+	}
 	while (*s1 && *s2 && *s1 == *s2)
 	{
 		s1++;

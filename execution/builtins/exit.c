@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 09:29:07 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:36:23 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int	exit_cmd(char **argv, int exit_status)
 	{
 		if (argv[1])
 			return (printf_fd(2, "exit\nexit: too many arguments\n"), \
-			ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(exit_ & 255), 1);
+			ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(1), 1);
 	}
 	else
 	{
 		return (printf_fd(2, "exit\nexit: %s: numeric argument required\n", \
 		argv[0]), ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(255), 1);
 	}
-	return (0);
+	return (exit((int)exit_ & 255), (int)exit_ & 255);
 }

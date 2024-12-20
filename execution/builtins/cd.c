@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/17 09:26:54 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/20 01:45:55 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,30 @@ int	go_home(t_env *env)
 	return (1);
 }
 
+int go_oldpwd(t_env *env)
+{
+	char	*old_pwd;
+	char	*cwd;
+
+	old_pwd = env_get(env, "OLDPWD");
+	if (!old_pwd)
+	{
+		printf_fd(2, "cd: OLDPWD not set\n");
+		return (0);
+	}
+	cwd = ft_strdup(old_pwd);
+	get_set_cwd(GET, NULL, &cwd);
+	if (chdir(old_pwd) == -1)
+	{
+		perror(old_pwd);
+		return (0);
+	}
+	env_set(&env, "OLDPWD", cwd);
+	env_set(&env, "PWD", old_pwd);
+	get_set_cwd(SET, old_pwd, NULL);
+	return (1);
+}
+
 void	handle_cd_failure(char *new, char *current_wd, t_env *env)
 {
 	char	*joined;
@@ -59,6 +83,8 @@ int	cd_cmd(t_env *env, char **argv)
 
 	if (!argv[1] || !ft_strcmp(argv[1], "~"))
 		return (go_home(env));
+	if (!ft_strcmp(argv[1], "-"))
+		return (go_oldpwd(env));
 	if (argv[2])
 		return (printf_fd(2, "cd: too many arguments\n"), 1);
 	new = ft_strdup(argv[1]);

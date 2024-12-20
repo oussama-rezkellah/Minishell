@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/18 03:38:05 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:07:58 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ char	*find_command_path(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
+	if (cmd && (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
@@ -177,6 +177,7 @@ void	execute_external(char **argv, t_env *envp)
 	char	*path;
 	char	**env;
 
+
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	env = lst_to_array(envp);
@@ -200,7 +201,7 @@ void	cmd_exec(t_tree *node, t_env **env)
 	int		stat;
 	int		pid;
 
-	if (!node)
+	if (!node || !node->p_cmd || !*(node->p_cmd))
 		return ;
 	// cmd = expand command
 	stat = 0;
@@ -214,16 +215,19 @@ void	cmd_exec(t_tree *node, t_env **env)
 		return ((void)execute_builtin(cmd, *env));
 	if (handle_redirections(node) == -1)
 		return ;
-	if ((*env)->pipe_flag == 0)
-	{
+	// if ((*env)->pipe_flag == 0)
+	// {
 		pid = fork();
 		if (pid == 0)
+		{
 			execute_external(cmd, *env);
-	}
-	else if ((*env)->pipe_flag == 1)
-	{
-		(*env)->pipe_flag = 0;
-		execute_external(cmd, *env);
-	}
+			exit(EXIT_FAILURE);
+		}
+	// }
+	// else if ((*env)->pipe_flag == 1)
+	// {
+	// 	(*env)->pipe_flag = 0;
+	// 	execute_external(cmd, *env);
+	// }
 	exit_status(SET, ft_wait(pid, pid, &stat));
 }
