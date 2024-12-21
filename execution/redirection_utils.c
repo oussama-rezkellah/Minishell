@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 06:37:35 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 18:10:04 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,15 @@ int	ft_heredoc(char *del, t_env *env)
 	char	*line;
 	char	*newline;
 	int		fd_in;
-	// int		flag;
+	int		flag;
 
 	(void)env;
-	// flag = 1;
+	flag = 1;
 	fd_in = dup(0);
 	if (pipe(fd) == -1)
 		return (-1);
 	signal(SIGINT, heredoc_sigint);
-	// determine expand flag
-	// del = expand_flag(del, &flag);
+	del = expand_del(del, &flag);
 	while (1)
 	{
 		line = readline("> ");
@@ -35,10 +34,9 @@ int	ft_heredoc(char *del, t_env *env)
 			break ;
 		if (!line || !ft_strcmp(line, del))
 			return (free(line), close(fd_in), close(fd[1]), fd[0]);
-		// TODO logic for heredoc expansion
-		// if (!flag)
-		// 	newline = expand_heredoc(line, env);
-		// else
+		if (!flag)
+			newline = expand_heredoc(line, env);
+		else
 			newline = line;
 		if (!newline)
 			newline = "";

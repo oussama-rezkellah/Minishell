@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 06:13:40 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 18:07:22 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,10 @@ char *replace_values(char **str, t_env *env);
 char **ft_expand(t_tree *node, t_env *env);
 char **split_cmd(char *s);
 char **remove_q_cmd(char **cmd);
+char *remove_q_line(char *str);
+char *expand_del(char *del, int *flag);
+char *expand_heredoc(char *line, t_env *env);
+
 
 // builtins
 int			is_builtin(char *cmd);

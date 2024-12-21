@@ -18,7 +18,7 @@ static char *process_char(char *to_ret, char *str, int i, int *s_q, int *d_q) {
 	return (ft_strjoin(to_ret, tmp));
 }
 
-static char *remove_q_line(char *str)
+char *remove_q_line(char *str)
 {
     char *to_ret = ft_strdup("");
 	int s_q = 0;
