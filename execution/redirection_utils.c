@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/18 03:26:42 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:37:35 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_heredoc(char *del, t_env *env)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_heredoc_signal)
+		if (g_heredoc_signal == 1)
 			break ;
 		if (!line || !ft_strcmp(line, del))
 			return (free(line), close(fd_in), close(fd[1]), fd[0]);
@@ -52,30 +52,13 @@ int	ft_heredoc(char *del, t_env *env)
 	return (free(line), close(fd[1]), fd[0]);
 }
 
-int	handle_exec_err(char *cmd, int errno_val)
-{
-	printf_fd(2, "minishell: ");
-	printf_fd(2, cmd);
-	printf_fd(2, ": ");
-	if (errno_val == -69)
-		return (printf_fd(2, "cd: error retrieving current directory: \
-		getcwd: cannot access parent directories: No such file or \
-		directory\n"), 1);
-	if (errno_val == -127)
-		return (printf_fd(2, "command not found\n"), 127);
-	else if (errno_val == EACCES)
-		return (printf_fd(2, "permission denied\n"), 126);
-	else
-		return (printf_fd(2, "%s\n", strerror(errno_val)));
-}
-
 int	handle_redirections(t_tree *node)
 {
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 		{
-			return (-1);
+			return (handle_exec_err("dup2: ", errno), -1);
 		}
 		close(node->fd_in);
 	}
@@ -83,7 +66,7 @@ int	handle_redirections(t_tree *node)
 	{
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 		{
-			return (-1);
+			return (handle_exec_err("dup2: ", errno), -1);
 		}
 		close(node->fd_out);
 	}

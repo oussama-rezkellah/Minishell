@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/19 22:35:43 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:18:31 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,14 @@ int	main(int ac, char **av, char **env)
 	t_minishell		sh;
 	struct termios	save;
 	char			*input;
-
+	int				in_copy;
+	int				out_copy;
+	extern int		rl_catch_signals;
 
 	(void)ac;
 	(void)av;
 	(void)env;
 	initialise_env (&sh.env, env);
-	// t_env *tmp = sh.env;
-	// while (tmp)
-	// {
-	// 	printf_fd (1, "%s:", tmp->name);
-	// 	printf_fd (1, "%s\n", tmp->value);
-	// 	printf_fd (1, "%s \n", tmp->env);
-	// 	tmp = tmp->next;
-	// }
-	// exit(0);
 	rl_catch_signals = 0;
 	if (isatty(0) && tcgetattr(0, &save))
 		return (perror("termios"), 1);
@@ -43,20 +36,14 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (!input[0])
 			continue ;
-
-
-
-
 		add_history(input);
 		if (!parsing(&sh, input))
 		{
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
-
-		int in_copy = dup(STDIN_FILENO);
-		int out_copy = dup(STDOUT_FILENO);
-
+		in_copy = dup(STDIN_FILENO);
+		out_copy = dup(STDOUT_FILENO);
 		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env));
 		dup2(in_copy, STDIN_FILENO);
@@ -70,13 +57,3 @@ int	main(int ac, char **av, char **env)
 	ft_malloc (0, CLEAR_ENV);
 }
 
-	// TEST for ENV
-
-	// t_env *tmp = sh.env;
-	// while (tmp)
-	// {
-	// 	printf_fd (1, "%s:", tmp->name);
-	// 	printf_fd (1, "%s\n", tmp->value);
-	// 	// printf_fd (1, "%s \n", tmp->env);
-	// 	tmp = tmp->next;
-	// }

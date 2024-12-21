@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/19 22:59:50 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:07:22 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,19 @@ void	pipe_exec(t_tree *node, t_env **env)
 		return ;
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	exit_status(SET, ft_wait(l_child, r_child, &status));
+	waitpid(l_child, NULL, 0);
+	waitpid(r_child, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			printf_fd(1, "\n");
+		else if (WTERMSIG(status) == SIGQUIT)
+			printf_fd(1, "Quit: 3\n");
+		status = (128 + WTERMSIG(status));
+	}
+	else
+		status =  (WEXITSTATUS(status));
+	exit_status(SET, status);
+	// exit_status(SET, ft_wait(l_child, r_child, &status));
 }
 

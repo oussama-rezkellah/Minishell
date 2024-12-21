@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/19 23:11:50 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:47:52 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *cmd)
 {
 	const char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env",
-		"exit", "$?", NULL};
+		"exit", NULL};
 	int			i;
 
 	i = 0;
@@ -39,17 +39,17 @@ int	execute_builtin(char **cmd, t_env *env)
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		exit_ =  (cd_cmd(env, cmd));
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		exit_ =  (pwd_cmd(cmd));
+		exit_ =  (pwd_cmd());
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		exit_ =  (env_cmd(env), 0);
+		exit_ =  (env_cmd(env, cmd), 0);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		exit_ =  (unset_cmd(&env, cmd + 1));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		exit_ =  (exit_cmd(cmd + 1, exit_status(0, 0)));
-	else if (ft_strcmp(cmd[0], "$?") == 0)
-		exit_ =  (printf_fd(2, "%d\n", exit_status(GET, 0)));
 	else
 		exit_ =  (1);
+		// printf_fd(2, "cmd=[%s]\n, exit = [%d]\n", cmd[0], exit_);
+	// exit_status(SET, exit_);
 	return (exit_);
 }
 

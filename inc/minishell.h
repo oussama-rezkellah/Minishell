@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/20 02:40:03 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:13:40 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <string.h>
 # include <termios.h>
 # include <sys/param.h>
+# include <sys/stat.h>
+# include <stdbool.h>
+
 
 typedef enum e_token
 {
@@ -195,8 +198,8 @@ int			is_valid_name(char *name);
 int			export_cmd(char **argv, t_env **env);
 int			echo_cmd(char **arguments);
 int			cd_cmd(t_env *env, char **argv);
-int			pwd_cmd(char **args);
-int			env_cmd(t_env *env);
+int			pwd_cmd(void);
+int			env_cmd(t_env *env, char **cmd);
 int			exit_cmd(char **argv, int exit_status);
 int			unset_cmd(t_env **env, char **argv);
 
