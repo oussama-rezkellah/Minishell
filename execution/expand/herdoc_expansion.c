@@ -4,7 +4,7 @@ static int extract_var_name(char* input, char** var_name)
 {
 	int j = 0;
 	int i = -1;
-	while (ft_isalnum(*input + j) || *input + j == '_')
+	while (ft_isalnum(*(input + j)) || *(input + j) == '_')
 		j++;
 	*var_name = ft_malloc(j + 1, MAL);
 	while (++i < j)
@@ -51,9 +51,9 @@ static char* process_char(char *ret, int *i, char* input, t_env *env)
 char *expand_heredoc(char *line, t_env *env)
 {
     char *to_ret = ft_strdup("");
-    int i = -1;
+    int i = 0;
 
-	while (line[++i])
+	while (line[i])
 		to_ret = process_char(to_ret, &i,line, env);
 	return (to_ret);
 }
