@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 06:46:56 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:56:34 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 
 char	*find_command_path(char *cmd, char **env);
 char	**get_paths(char **env);
+
+void is_directory(const char *path)
+{
+	struct stat path_stat;
+
+	if (!path)
+		return ;
+	if (stat(path, &path_stat) != 0)
+		return ;
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		printf_fd(2, "minishell: %s: is a directory\n", path);
+		exit_status(SET, 126);
+		exit(126);
+	}
+}
 
 void	execute_external(char **argv, t_env *envp)
 {
@@ -24,16 +40,18 @@ void	execute_external(char **argv, t_env *envp)
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	env = lst_to_array(envp);
+	is_directory(argv[0]);
 	path = find_command_path(argv[0], env);
-	if (!path)
+	if (!path && errno != EACCES)
 	{
 		handle_exec_err(argv[0], -127);
 		exit(127);
 	}
+	// is_directory(path);
 	execve(path, argv, env);
 	if (argv && argv[0] && !argv[0][0])
 		errno = -127;
-	exit(handle_exec_err(NULL, errno));
+	exit(handle_exec_err(argv[0], errno));
 }
 int	handle_redirections(t_tree *node);
 
@@ -51,10 +69,11 @@ void	cmd_exec(t_tree *node, t_env **env)
 	cmd = ft_expand(node , *env);
 	node->fd_in = 0;
 	node->fd_out = 1;
-	if (open_fill_fds(node) == -1 && handle_redirections(node) == -1)
+	if (open_fill_fds(node) == -1 || handle_redirections(node) == -1)
 		return ;
 	if (is_builtin(cmd[0]))
-		return ((void)execute_builtin(cmd, *env));
+		return ((void)exit_status(SET, execute_builtin(cmd, *env)));
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -63,10 +82,9 @@ void	cmd_exec(t_tree *node, t_env **env)
 	}
 	if (pid == 0)
 	{
-			// signal(SIGINT, handle_sigint);
-			// signal(SIGQUIT, SIG_IGN);
-			execute_external(cmd, *env);
-			exit(EXIT_FAILURE);
+		signal(SIGINT, SIG_DFL);
+		execute_external(cmd, *env);
+		exit(EXIT_FAILURE);
 	}
 
 	waitpid(pid, &status, 0);

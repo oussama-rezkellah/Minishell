@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:53:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/11 22:21:55 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/20 22:51:36 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void print_tree_recursive(t_tree *root, int level, char *prefix, int is_left)
     print_tree_recursive(root->l_child, level + 1, new_prefix, 1);
 }
 
-void test_tree(t_tree *root)
-{
-    printf("\nTree Structure:\n");
-    print_tree_recursive(root, 0, "", 1);
-}
+// void test_tree(t_tree *root)
+// {
+//     printf("\nTree Structure:\n");
+//     print_tree_recursive(root, 0, "", 1);
+// }
 
 int	parsing(t_minishell *sh, char *input)
 {
@@ -66,6 +66,6 @@ int	parsing(t_minishell *sh, char *input)
 	if (!check_syntax (sh->tokens))
 		return (0);
 	build_tree(sh);
-    test_tree(sh->tree);
+    // test_tree(sh->tree);
 	return (1);
 }

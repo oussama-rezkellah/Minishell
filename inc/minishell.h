@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 18:07:22 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:28:34 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <signal.h>
 # include <string.h>
 # include <termios.h>
-# include <sys/param.h>
+// # include <sys/param.h>
 # include <sys/stat.h>
 # include <stdbool.h>
 

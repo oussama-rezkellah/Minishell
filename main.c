@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 06:18:31 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:10:27 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int ac, char **av, char **env)
 		if (!parsing(&sh, input))
 		{
 			ft_malloc (0, CLEAR);
+			exit_status(SET, 258);
 			continue ;
 		}
 		in_copy = dup(STDIN_FILENO);
