@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 06:47:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:34:55 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	or_exec(t_tree *node, t_env **env)
 void	and_exec(t_tree *node, t_env **env)
 {
 	execution (node->l_child, env);
+	dup2((*env)->in_copy, STDIN_FILENO);
+	dup2((*env)->out_copy, STDOUT_FILENO);
 	if (!exit_status(GET, 0))
 		return (execution(node->r_child, env));
 }

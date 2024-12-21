@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 20:10:27 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:32:51 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	main(int ac, char **av, char **env)
 	t_minishell		sh;
 	struct termios	save;
 	char			*input;
-	int				in_copy;
-	int				out_copy;
 	extern int		rl_catch_signals;
 
 	(void)ac;
@@ -43,14 +41,14 @@ int	main(int ac, char **av, char **env)
 			exit_status(SET, 258);
 			continue ;
 		}
-		in_copy = dup(STDIN_FILENO);
-		out_copy = dup(STDOUT_FILENO);
+		sh.env->in_copy = dup(STDIN_FILENO);
+		sh.env->out_copy = dup(STDOUT_FILENO);
 		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env));
-		dup2(in_copy, STDIN_FILENO);
-		dup2(out_copy, STDOUT_FILENO);
-		close(in_copy);
-		close(out_copy);
+		dup2(sh.env->in_copy, STDIN_FILENO);
+		dup2(sh.env->out_copy, STDOUT_FILENO);
+		close(sh.env->in_copy);
+		close(sh.env->out_copy);
 		if (g_heredoc_signal != 1 && isatty(0) && tcsetattr(0, TCSANOW, &save))
 			perror("termios");
 		ft_malloc (0, CLEAR);

@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 20:28:34 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:30:45 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct s_env
 	char			*name;
 	char			*value;
 	struct s_env	*next;
+	int				in_copy;
+	int				out_copy;
 }	t_env;
 
 typedef struct s_minishell
