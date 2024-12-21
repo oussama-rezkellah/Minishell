@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:26:55 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/05 12:27:59 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/21 06:45:23 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int exit_status(t_exit flag, int new_exit_status)
 
 	if (flag == GET)
 		return (exit_status);
-	exit_status = new_exit_status;
+	if (flag == SET)
+	{
+		// puts("here");
+		exit_status = new_exit_status;
+	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:53:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/30 12:52:40 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/11 22:21:55 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int	parsing(t_minishell *sh, char *input)
 	if (!check_syntax (sh->tokens))
 		return (0);
 	build_tree(sh);
-	test_tree(sh->tree);
+    test_tree(sh->tree);
 	return (1);
 }

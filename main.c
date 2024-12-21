@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/19 23:29:49 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/21 17:02:18 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,43 +202,46 @@ char **remove_q_cmd(char **cmd)
 
 int	main(int ac, char **av, char **env)
 {
-	t_minishell	sh;
-	char		*input;
+	t_minishell		sh;
+	struct termios	save;
+	char			*input;
+	int				in_copy;
+	int				out_copy;
+	extern int		rl_catch_signals;
 
 	(void)ac;
 	(void)av;
 	(void)env;
 	initialise_env (&sh.env, env);
-	// t_env *tmp = sh.env;
-	// while (tmp)
-	// {
-	// 	printf_fd (1, "%s:", tmp->name);
-	// 	printf_fd (1, "%s\n", tmp->value);
-	// 	// printf_fd (1, "%s \n", tmp->env);
-	// 	tmp = tmp->next;
-	// }
-	char *test = ft_strdup("$\"USER    \"$$$ 'te  st'ou ss");
-	char **test1 = remove_q_cmd(split_cmd (replace_values(&test, sh.env)));
-	while (*test1)
-	{
-		printf("%s\n", *test1);
-		test1++;
-	}
-	exit(0);
+	rl_catch_signals = 0;
+	if (isatty(0) && tcgetattr(0, &save))
+		return (perror("termios"), 1);
 	while (1)
 	{
+		signals_init();
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
+		if (!input[0])
+			continue ;
 		add_history(input);
 		if (!parsing(&sh, input))
 		{
 			ft_malloc (0, CLEAR);
 			continue ;
 		}
+		in_copy = dup(STDIN_FILENO);
+		out_copy = dup(STDOUT_FILENO);
+		open_all_heredocs(&sh);
+		execution(sh.tree, &(sh.env));
+		dup2(in_copy, STDIN_FILENO);
+		dup2(out_copy, STDOUT_FILENO);
+		close(in_copy);
+		close(out_copy);
+		if (g_heredoc_signal != 1 && isatty(0) && tcsetattr(0, TCSANOW, &save))
+			perror("termios");
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);
 }
 
-	// TEST for ENV

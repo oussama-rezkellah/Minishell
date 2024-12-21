@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_array.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/14 19:25:22 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:34:02 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	array_to_lst(char **env, t_env **new_env)
 	{
 		name = get_name (*env);
 		value = get_value (*env);
+		if (!ft_strcmp(name, "PWD") && value)
+			get_set_cwd(SET, value, NULL);
 		lst_addback_env(new_env, create_env(name, value));
 		env++;
 	}
@@ -63,6 +65,6 @@ char	**lst_to_array(t_env *lst_env)
 		env[start] = lst_env->env;
 		lst_env = lst_env->next;
 	}
-	env[++start] = NULL;
+	env[start] = NULL;
 	return (env);
 }
