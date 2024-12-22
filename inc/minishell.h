@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 23:09:47 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 06:52:02 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int			g_heredoc_signal;
 void		signals_init(void);
 void		heredoc_sigint(int sig);
 void		handle_sigint(int signal);
-int			ft_wait(int l_pid, int r_pid, int *status);
 
 int			exit_status(t_exit flag, int new_exit_status);
 
