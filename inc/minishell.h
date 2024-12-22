@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 02:46:50 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 21:30:45 by aben-hss         ###   ########.fr       */
+/*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
+/*   Updated: 2024/12/22 21:31:08 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@
 # include <signal.h>
 # include <string.h>
 # include <termios.h>
-// # include <sys/param.h>
 # include <sys/stat.h>
 # include <stdbool.h>
-
 
 typedef enum e_token
 {
@@ -101,6 +99,8 @@ typedef struct s_env
 	struct s_env	*next;
 	int				in_copy;
 	int				out_copy;
+	int				process_count;
+	int				fork_err;
 }	t_env;
 
 typedef struct s_minishell
@@ -113,13 +113,11 @@ typedef struct s_minishell
 
 int			g_heredoc_signal;
 
+// utils
 void		signals_init(void);
 void		heredoc_sigint(int sig);
 void		handle_sigint(int signal);
-int			ft_wait(int l_pid, int r_pid, int *status);
-
 int			exit_status(t_exit flag, int new_exit_status);
-
 void		initialise_env(t_env **new_env, char **env);
 void		array_to_lst(char **env, t_env **new_env);
 void		shlvl(t_env **env);
@@ -131,7 +129,6 @@ void		lst_addback_env(t_env **new_env, t_env *new);
 size_t		lstsize_env(t_env *lst_env);
 char		*env_get(t_env *env, char *name);
 void		env_set(t_env **env, char *name, char *value);
-
 int			ft_isspace(int c);
 char		*ft_strchr(const char *s, int c);
 size_t		ft_strlen(const char *str);
@@ -151,6 +148,7 @@ int			ft_isalpha(int c);
 int			ft_isalnum(int c);
 char		**ft_split(char const *s, char c);
 
+// parsing
 t_tok		get_type(char **str);
 t_tok		check_type(char *str);
 int			len_unquoted(char *str);
@@ -187,14 +185,13 @@ int			open_all_heredocs(t_minishell *sh);
 int			ft_heredoc(char *del, t_env *env);
 
 //expnad
-char *replace_values(char **str, t_env *env);
-char **ft_expand(t_tree *node, t_env *env);
-char **split_cmd(char *s);
-char **remove_q_cmd(char **cmd);
-char *remove_q_line(char *str);
-char *expand_del(char *del, int *flag);
-char *expand_heredoc(char *line, t_env *env);
-
+char		*replace_values(char **str, t_env *env);
+char		**ft_expand(t_tree *node, t_env *env);
+char		**split_cmd(char *s);
+char		**remove_q_cmd(char **cmd);
+char		*remove_q_line(char *str);
+char		*expand_del(char *del, int *flag);
+char		*expand_heredoc(char *line, t_env *env);
 
 // builtins
 int			is_builtin(char *cmd);
@@ -208,5 +205,6 @@ int			pwd_cmd(void);
 int			env_cmd(t_env *env, char **cmd);
 int			exit_cmd(char **argv, int exit_status);
 int			unset_cmd(t_env **env, char **argv);
+int			ft_fork(t_env *env);
 
 #endif

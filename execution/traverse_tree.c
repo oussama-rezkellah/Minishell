@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 21:34:55 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:04:59 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ int	execute_builtin(char **cmd, t_env *env)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		exit_ =  (unset_cmd(&env, cmd + 1));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		exit_ =  (exit_cmd(cmd + 1, exit_status(0, 0)));
+		exit_ =  (exit_cmd(cmd + 1, exit_status(GET, 0)));
 	else
 		exit_ =  (1);
-		// printf_fd(2, "cmd=[%s]\n, exit = [%d]\n", cmd[0], exit_);
-	// exit_status(SET, exit_);
 	return (exit_);
 }
 
@@ -71,7 +69,7 @@ void	and_exec(t_tree *node, t_env **env)
 
 void	execution(t_tree *node, t_env **env)
 {
-	if (!node)
+	if (!node || (*env)->fork_err)
 		return ;
 	if (node->type == OR)
 		return (or_exec(node, env));

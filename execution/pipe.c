@@ -6,11 +6,24 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 20:08:16 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 06:24:34 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	ft_fork(t_env *env)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (exit(1), -1);
+	env->process_count++;
+	if (env->process_count > 25)
+		env->fork_err = 1;
+	return (pid);
+}
 
 int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 {
@@ -18,9 +31,9 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
-	pid = fork();
+	pid = ft_fork(env);
 	if (pid < 0)
-		return (pid);
+		return (exit(1), pid);
 	else if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -40,9 +53,9 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
-	pid = fork();
+	pid = ft_fork(env);
 	if (pid < 0)
-		return (pid);
+		return (exit(1), pid);
 	else if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -58,11 +71,7 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 void	pipe_exec(t_tree *node, t_env **env)
 {
-	int		l_child;
-	int		r_child;
-	int		pipe_fd[2];
-	int		status;
-
+	int (l_child), (r_child), (pipe_fd[2]), (status);
 	if (pipe(pipe_fd) < 0)
 		return ;
 	signal(SIGINT, SIG_IGN);
@@ -84,8 +93,6 @@ void	pipe_exec(t_tree *node, t_env **env)
 		status = (128 + WTERMSIG(status));
 	}
 	else
-		status =  (WEXITSTATUS(status));
+		status = (WEXITSTATUS(status));
 	exit_status(SET, status);
-	// exit_status(SET, ft_wait(l_child, r_child, &status));
 }
-

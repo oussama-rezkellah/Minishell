@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 05:29:29 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 20:52:51 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 06:17:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int	handle_exec_err(char *cmd, int errno_val)
 	if (errno_val == -127)
 		return (printf_fd(2, "command not found\n"), 127);
 	else if (errno_val == EACCES)
-		return (printf_fd(2, "permission denied\n"), exit_status(SET, 126), 126);
+		return (printf_fd(2, "Permission denied\n"), \
+			exit_status(SET, 126), 126);
 	else if (errno_val == ENOENT)
-		return (printf_fd(2, "No such file or directory\n"), exit_status(SET, 127), 127);
+		return (printf_fd(2, "No such file or directory\n"), \
+			exit_status(SET, 127), 127);
 	else
-		return (printf_fd(2, "%s\n", strerror(errno_val)), exit_status(SET, 1), 1);
+		return (printf_fd(2, "%s\n", strerror(errno_val)), \
+			exit_status(SET, 1), 1);
 }
 
 char	**get_paths(char **env)
@@ -51,15 +54,30 @@ char	**get_paths(char **env)
 	return (NULL);
 }
 
-bool is_a_directory(const char *path)
+static bool	is_a_directory(const char *path)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	if (!path)
 		return (false);
 	if (stat(path, &path_stat) != 0)
 		return (false);
-	return (S_ISDIR(path_stat.st_mode));
+	return (S_ISDIR(path_stat.st_mode)
+		&& (path[ft_strlen(path) - 1] == '/' || (path[0] == '/') || \
+			(path[0] == '.' && path[1] == '/')));
+}
+
+static char	*check_direct_path(char *cmd)
+{
+	if (cmd && (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/')))
+	{
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
+		handle_exec_err(cmd, errno);
+		exit(exit_status(GET, 0));
+		return (NULL);
+	}
+	return (NULL);
 }
 
 char	*find_command_path(char *cmd, char **env)
@@ -68,16 +86,11 @@ char	*find_command_path(char *cmd, char **env)
 	char	*full_path;
 	int		i;
 
-	i = 0;
-
-	if (cmd && (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/')))
-	{
-		if (access(cmd, F_OK) == 0)
-			return (ft_strdup(cmd));
-		return (handle_exec_err(cmd, errno), exit(exit_status(GET, 0)), NULL);
-	}
 	if (!env)
 		return (NULL);
+	full_path = check_direct_path(cmd);
+	if (full_path)
+		return (full_path);
 	paths = get_paths(env);
 	if (!paths)
 	{
@@ -90,8 +103,7 @@ char	*find_command_path(char *cmd, char **env)
 	{
 		full_path = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(full_path, cmd);
-		if (access(full_path, F_OK) == 0
-			&& !is_a_directory(full_path))
+		if (access(full_path, F_OK) == 0 && !is_a_directory(full_path))
 			return (full_path);
 	}
 	return (NULL);

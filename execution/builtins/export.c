@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/20 02:19:38 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:38:45 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	export_(char *input, t_env **env)
 	char	*equals_pos;
 
 	equals_pos = ft_strchr(input, '=');
-	if (equals_pos)
+	if (equals_pos && ft_strlen(input) > 1)
 	{
 		name = ft_strndup(input, equals_pos - input);
 		value = equals_pos + 1;
