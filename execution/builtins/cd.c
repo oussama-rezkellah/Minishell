@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/20 01:45:55 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:40:09 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ int	cd_cmd(t_env *env, char **argv)
 		return (go_home(env));
 	if (!ft_strcmp(argv[1], "-"))
 		return (go_oldpwd(env));
-	if (argv[2])
-		return (printf_fd(2, "cd: too many arguments\n"), 1);
 	new = ft_strdup(argv[1]);
 	change = chdir(new);
 	get_set_cwd(GET, NULL, &cwd);

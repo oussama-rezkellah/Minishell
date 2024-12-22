@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 21:34:16 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:10:18 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void is_directory(const char *path)
 		return ;
 	if (stat(path, &path_stat) != 0)
 		return ;
-	if (S_ISDIR(path_stat.st_mode))
+	if (S_ISDIR(path_stat.st_mode)
+		&& (path[ft_strlen(path) - 1] == '/' || (path[0] == '/') || (path[0]=='.' && path[1] == '/')))
 	{
 		printf_fd(2, "minishell: %s: is a directory\n", path);
 		exit_status(SET, 126);
@@ -47,7 +48,6 @@ void	execute_external(char **argv, t_env *envp)
 		handle_exec_err(argv[0], -127);
 		exit(127);
 	}
-	// is_directory(path);
 	execve(path, argv, env);
 	if (argv && argv[0] && !argv[0][0])
 		errno = -127;
@@ -67,14 +67,16 @@ void	cmd_exec(t_tree *node, t_env **env)
 	status = 0;
 	pid = -1;
 	cmd = ft_expand(node , *env);
+	if (!cmd[0])
+		return ((void)exit_status(SET, 0));
 	node->fd_in = 0;
 	node->fd_out = 1;
 	if (open_fill_fds(node) == -1 || handle_redirections(node) == -1)
-		return ;
+		return (void)exit_status(SET, 1);
 	if (is_builtin(cmd[0]))
 		return ((void)exit_status(SET, execute_builtin(cmd, *env)));
 	signal(SIGINT, SIG_IGN);
-	pid = fork();
+	pid = ft_fork(*env);
 	if (pid < 0)
 	{
 		handle_exec_err("fork: ", errno);

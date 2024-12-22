@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 05:29:29 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 20:52:51 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:40:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handle_exec_err(char *cmd, int errno_val)
 	if (errno_val == -127)
 		return (printf_fd(2, "command not found\n"), 127);
 	else if (errno_val == EACCES)
-		return (printf_fd(2, "permission denied\n"), exit_status(SET, 126), 126);
+		return (printf_fd(2, "Permission denied\n"), exit_status(SET, 126), 126);
 	else if (errno_val == ENOENT)
 		return (printf_fd(2, "No such file or directory\n"), exit_status(SET, 127), 127);
 	else
@@ -59,7 +59,8 @@ bool is_a_directory(const char *path)
 		return (false);
 	if (stat(path, &path_stat) != 0)
 		return (false);
-	return (S_ISDIR(path_stat.st_mode));
+	return (S_ISDIR(path_stat.st_mode)
+		&& (path[ft_strlen(path) - 1] == '/' || (path[0] == '/') || (path[0]=='.' && path[1] == '/')));
 }
 
 char	*find_command_path(char *cmd, char **env)
