@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/21 00:13:29 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:50:49 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,18 @@ int	open_fill_fds(t_tree *cmd)
 
 	ret = 1;
 	current = cmd->redir;
+	if (!current)
+		return (1);
 	while (current)
 	{
 		if (is_infile(current))
 			ret = handle_infile(cmd, current);
 		else if (is_outfile(current))
 			ret = handle_outfile(cmd, current);
+		printf("ret: %d\n", ret);
 		if (ret == -1)
 			return (-1);
 		current = current->next;
 	}
-	return (1);
+	return (handle_redirections(cmd));
 }

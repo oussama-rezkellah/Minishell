@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 14:38:55 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:51:17 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,17 @@ void	cmd_exec(t_tree *node, t_env **env)
 {
 	char	**cmd;
 
-	if (!node || !node->p_cmd)
+	if (!node)
 		return ;
+	node->fd_in = 0;
+	node->fd_out = 1;
+	if (open_fill_fds(node) == -1)
+		return ((void)exit_status(SET, 1));
 	cmd = ft_expand(node, *env);
 	if (!cmd)
 		return ;
 	if (!cmd[0])
 		return ((void)exit_status(SET, 0));
-	node->fd_in = 0;
-	node->fd_out = 1;
-	if (open_fill_fds(node) == -1 || handle_redirections(node) == -1)
-		return ((void)exit_status(SET, 1));
 	if (is_builtin(cmd[0]))
 		return ((void)exit_status(SET, execute_builtin(cmd, *env)));
 	execute_command(cmd, *env);

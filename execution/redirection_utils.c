@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/22 06:50:59 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:49:04 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,13 @@ int	handle_redirections(t_tree *node)
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
-		{
 			return (-1);
-		}
 		close(node->fd_in);
 	}
 	if (node->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-		{
 			return (-1);
-		}
 		close(node->fd_out);
 	}
 	return (0);
