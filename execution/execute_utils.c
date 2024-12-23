@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 05:29:29 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/22 06:17:54 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 08:56:43 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	handle_exec_err(char *cmd, int errno_val)
 		directory\n"), exit_status(SET, 1));
 	if (errno_val == -127)
 		return (printf_fd(2, "command not found\n"), 127);
+	if (errno_val == -77)
+		return (printf_fd(2, "ambiguous redirect\n"), 1);
 	else if (errno_val == EACCES)
 		return (printf_fd(2, "Permission denied\n"), \
 			exit_status(SET, 126), 126);
