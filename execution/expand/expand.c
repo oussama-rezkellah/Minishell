@@ -12,8 +12,8 @@ int expand_redir(t_tree *node, t_env *env)
         {
             node->redir->file = replace_values(&node->redir->file, env);
             tmp = split_cmd (node->redir->file);
-            if (!tmp[0][0] || tmp[1])
-                ;//set_exit_status and print ambiguous and return 0
+            if (!tmp[0] || !tmp[0][0] || tmp[1])
+                return 0;//set_exit_status and print ambiguous and return 0
             node->redir->file = remove_q_line(tmp[0]);
         }
         redir = redir->next;

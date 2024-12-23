@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 00:34:18 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:16:03 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	cmd_exec(t_tree *node, t_env **env)
 	if (!node || !node->p_cmd || !*(node->p_cmd))
 		return ;
 	cmd = ft_expand(node, *env);
+	if (!cmd)
+		return;//here
 	if (!cmd[0])
 		return ((void)exit_status(SET, 0));
 	node->fd_in = 0;

@@ -13,7 +13,7 @@ static size_t count_args(char *s)
 			in_s_q = !in_s_q;
 		if (s[i] == '"' && !in_s_q)
 			in_d_q = !in_d_q;
-		if ((i == 0 && s[i] != ' ') || (s[i] == ' ' && s[i+1] && s[i+1] != ' ' && !in_d_q && !in_s_q))
+		if ((i == 0 && !ft_isspace(s[i])) || (ft_isspace(s[i]) && s[i+1] && !ft_isspace(s[i+1]) && !in_d_q && !in_s_q))
 			count++;
 		i++;
 	}
@@ -44,15 +44,15 @@ char **split_cmd(char *s)
 		in_s_q = 0;
 		in_d_q = 0;
 		i = 0;
-		while (*s == ' ')
+		while (ft_isspace(*s))
             s++;
-		while (s[i] && (in_s_q || in_d_q || s[i] != ' '))
+		while (s[i] && (in_s_q || in_d_q || !ft_isspace(s[i])))
 		{
 			if (s[i] == '\'' && !in_d_q)
 				in_s_q = !in_s_q;
 			if (s[i] == '"' && !in_s_q)
 				in_d_q = !in_d_q;
-			if (!in_s_q && !in_d_q && s[i] == ' ')
+			if (!in_s_q && !in_d_q && ft_isspace(s[i]))
                 break;
 			i++;
 		}
