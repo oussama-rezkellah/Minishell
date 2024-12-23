@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:53:57 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/22 20:49:08 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 02:26:20 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,31 @@
 #define BLUE    "\x1b[34m"
 #define RESET   "\x1b[0m"
 
-void print_token_colored(t_tree *node)
+void	print_token_colored(t_tree *node)
 {
-    if (node->type == CMD)
-        printf(GREEN "%s" RESET, node->p_cmd);
-    else if (node->type == AND)
-        printf(YELLOW "&&" RESET);
-    else if (node->type == OR)
-        printf(RED "||" RESET);
-    else if (node->type == PIPE)
-        printf(BLUE "|" RESET);
+	if (node->type == CMD)
+		printf(GREEN "%s" RESET, node->p_cmd);
+	else if (node->type == AND)
+		printf(YELLOW "&&" RESET);
+	else if (node->type == OR)
+		printf(RED "||" RESET);
+	else if (node->type == PIPE)
+		printf(BLUE "|" RESET);
 }
 
-void print_tree_recursive(t_tree *root, int level, char *prefix, int is_left)
-{
-    if (!root)
-        return;
-
-    printf("%s", prefix);
-    printf("%c-- ", is_left ? '`' : ',');
-    print_token_colored(root);
-    printf("\n");
-
-    char new_prefix[1024];
-    sprintf(new_prefix, "%s%c   ", prefix, is_left ? ' ' : '|');
-
-    print_tree_recursive(root->r_child, level + 1, new_prefix, 0);
-    print_tree_recursive(root->l_child, level + 1, new_prefix, 1);
-}
-
+// void	print_tree_recursive(t_tree *root, int level, char *prefix, int is_left)
+// {
+// 	if (!root)
+// 		return ;
+// 	printf("%s", prefix);
+// 	printf("%c-- ", is_left ? '`' : ',');
+// 	print_token_colored(root);
+// 	printf("\n");
+// 	char new_prefix[1024] ;
+// 	sprintf(new_prefix, "%s%c   ", prefix, is_left ? ' ' : '|');
+// 	print_tree_recursive(root->r_child, level + 1, new_prefix, 0);
+// 	print_tree_recursive(root->l_child, level + 1, new_prefix, 1);
+// }
 // void test_tree(t_tree *root)
 // {
 //     printf("\nTree Structure:\n");
@@ -66,6 +62,5 @@ int	parsing(t_minishell *sh, char *input)
 	if (!check_syntax (sh->tokens))
 		return (0);
 	build_tree(sh);
-    // test_tree(sh->tree);
 	return (1);
 }

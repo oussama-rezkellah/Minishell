@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 23:47:53 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/03 15:02:10 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/23 02:28:02 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*get_content(char **str)
 
 static t_lst_toks	*get_next_tok(char **str)
 {
-	t_tok		type;
+	t_tok	type;
 	char	*content;
 
 	content = NULL;
