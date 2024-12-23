@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 16:49:32 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:35:34 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <termios.h>
 # include <sys/stat.h>
 # include <stdbool.h>
+# include <dirent.h>
 
 typedef enum e_token
 {
@@ -201,6 +202,8 @@ char		**remove_q_cmd(char **cmd);
 char		*remove_q_line(char *str);
 char		*expand_del(char *del, int *flag);
 char		*expand_heredoc(char *line, t_env *env);
+int			match_pattern(char *pattern, char *str);
+char		*ft_wildcard(char **s);
 
 // builtins
 int			is_builtin(char *cmd);
