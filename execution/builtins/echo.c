@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:27:14 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/20 02:10:43 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:09:31 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ int	echo_cmd(char **arg)
 	i = 0;
 	if (!arg)
 		return (0);
+	i = 1;
+	// printf("here\n");
 	if (!arg[i] || !arg[i][0])
 		return (printf_fd(1, "\n"), 0);
 	while (flag_check(arg[i]))
 	{
 		flag = 1;
+		if (flag == 1 && (!arg[i] || !arg[i][0]))
+			return (0);
 		i++;
 	}
 	while (arg[i])

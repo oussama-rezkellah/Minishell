@@ -6,19 +6,19 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 03:17:13 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/17 00:19:02 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:35:33 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 void	init_empty(t_env **new_env)
 {
 	char	*pwd;
 
 	*new_env = NULL;
-	lst_addback_env(new_env, create_env("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."));
+	lst_addback_env(new_env, create_env("PATH", \
+		"/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."));
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{

@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/22 01:04:59 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:36:43 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute_builtin(char **cmd, t_env *env)
 	if (ft_strcmp(cmd[0], "export") == 0)
 		exit_ =  (export_cmd(cmd + 1, &env));
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		exit_ =  (echo_cmd(cmd + 1));
+		exit_ =  (echo_cmd(cmd));
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		exit_ =  (cd_cmd(env, cmd));
 	else if (ft_strcmp(cmd[0], "pwd") == 0)

@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/22 06:55:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:41:19 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		sh;
-	struct termios	save;
+	// struct termios	save;
 	char			*input;
 	extern int		rl_catch_signals;
 
-	(void)ac;
-	(void)av;
-	(void)env;
+	((void)ac), ((void)av);
 	initialise_env (&sh.env, env);
 	rl_catch_signals = 0;
-	if (isatty(0) && tcgetattr(0, &save))
-		return (perror("termios"), 1);
+	// if (isatty(0) && tcgetattr(0, &save))
+	// 	return (perror("termios"), 1);
 	while (1)
 	{
 		signals_init();
@@ -54,8 +52,8 @@ int	main(int ac, char **av, char **env)
 		dup2(sh.env->out_copy, STDOUT_FILENO);
 		close(sh.env->in_copy);
 		close(sh.env->out_copy);
-		if (g_heredoc_signal != 1 && isatty(0) &&tcsetattr(0, TCSANOW, &save))
-			perror("termios");
+		// if (g_heredoc_signal != 1 && isatty(0) &&tcsetattr(0, TCSANOW, &save))
+		// 	perror("termios");
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);
