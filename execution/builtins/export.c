@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 23:38:45 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:59:30 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	export_(char *input, t_env **env)
 	}
 	else if (is_valid_name(input))
 		return (set_or_append_env(input, NULL, SET_MODE, env), 0);
-	return (printf_fd(2, "export: '%s': not a valid identifier\n", input), 1);
+	return (printf_fd(2, "minishell: export: `%s': not a valid identifier\n", input), 1);
 }
 
 int	export_cmd(char **argv, t_env **env)
