@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 05:29:29 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 08:56:43 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:45:49 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,26 @@ char	**get_paths(char **env)
 	int		i;
 
 	i = 0;
+	paths = NULL;
 	while (env[i])
 	{
 		if (!strncmp(env[i], "PATH", 4))
 		{
+			if (ft_strlen(env[i]) == 5)
+				break ;
 			path = ft_strdup((strchr(env[i], '=')) + 1);
 			paths = ft_split(path, ':');
 			return (paths);
 		}
 		i++;
 	}
-	return (NULL);
+	paths = ft_malloc(2 * sizeof(char *), MAL);
+	paths[0] = ft_strdup("\200\0");
+	paths[1] = NULL;
+	return (paths);
 }
 
-static bool	is_a_directory(const char *path)
+bool	is_a_directory(const char *path)
 {
 	struct stat	path_stat;
 
@@ -94,6 +100,8 @@ char	*find_command_path(char *cmd, char **env)
 	if (full_path)
 		return (full_path);
 	paths = get_paths(env);
+	if (!ft_strcmp(paths[0], "\200"))
+		return (handle_exec_err(cmd, ENOENT), ft_strdup("\200\0"));
 	if (!paths)
 	{
 		if (access(cmd, F_OK) == 0)

@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 03:52:49 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:38:55 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	execute_external(char **argv, t_env *envp)
 	env = lst_to_array(envp);
 	is_directory(argv[0]);
 	path = find_command_path(argv[0], env);
+	if (!ft_strcmp(path, "\200"))
+		exit(127) ;
 	if (!path && errno != EACCES)
 	{
 		handle_exec_err(argv[0], -127);
@@ -87,7 +89,7 @@ void	cmd_exec(t_tree *node, t_env **env)
 {
 	char	**cmd;
 
-	if (!node || !node->p_cmd || !*(node->p_cmd))
+	if (!node || !node->p_cmd)
 		return ;
 	cmd = ft_expand(node, *env);
 	if (!cmd)
