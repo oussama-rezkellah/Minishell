@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 03:53:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:49:32 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ typedef struct s_stack
 	t_tree			*node;
 	struct s_stack	*next;
 }	t_stack;
+
+typedef struct s_quote
+{
+	int			s_q;
+	int			d_q;
+}	t_quote;
 
 typedef struct s_env
 {

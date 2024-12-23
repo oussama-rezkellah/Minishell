@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:19:09 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 13:36:13 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:54:36 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static char	*handle_quote(char	*result, char q, int *in_q, int *other_q)
 {
-	char	temp_char[2] = {q, '\0'};
+	char	*temp_char;
 
+	temp_char = ft_strdup(" ");
+	temp_char[0] = q;
 	if (!*other_q)
 		*in_q = !*in_q;
 	return (ft_strjoin(result, temp_char));
@@ -61,16 +63,16 @@ static char	*handle_var(char *ret, char **input, t_env *env)
 	return (ft_strjoin(ret, tmp));
 }
 
-static char	*process_char(char *ret, char **input, int *s_q, int *d_q, t_env *env)
+static char	*process_char(char *ret, char **input, t_quote	*q, t_env *env)
 {
 	char	*tmp;
 
 	tmp = ft_strdup(" ");
-	if (**input == '"' && !*s_q)
-		return ((*input)++, handle_quote(ret, '"', d_q, s_q));
-	if (**input == '\'' && !*d_q)
-		return ((*input)++, handle_quote(ret, '\'', s_q, d_q));
-	if (**input == '$' && !*s_q)
+	if (**input == '"' && !q->s_q)
+		return ((*input)++, handle_quote(ret, '"', &q->d_q, &q->s_q));
+	if (**input == '\'' && !q->d_q)
+		return ((*input)++, handle_quote(ret, '\'', &q->s_q, &q->d_q));
+	if (**input == '$' && !q->s_q)
 		return (handle_var(ret, input, env));
 	tmp[0] = **input;
 	return ((*input)++, ft_strjoin(ret, tmp));
@@ -79,13 +81,13 @@ static char	*process_char(char *ret, char **input, int *s_q, int *d_q, t_env *en
 char	*replace_values(char **str, t_env *env)
 {
 	char	*to_ret;
-	int		s_q;
-	int		d_q;
+	t_quote	*q;
 
 	to_ret = ft_strdup("");
-	s_q = 0;
-	d_q = 0;
+	q = ft_malloc(sizeof(t_quote), MAL);
+	q->s_q = 0;
+	q->d_q = 0;
 	while (**str)
-		to_ret = process_char(to_ret, str, &s_q, &d_q, env);
+		to_ret = process_char(to_ret, str, q, env);
 	return (to_ret);
 }
