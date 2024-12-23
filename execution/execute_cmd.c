@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 20:51:17 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:00:29 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static void	execute_command(char **cmd, t_env *env)
 	int	pid;
 	int	status;
 
+	if (!cmd[0])
+		return ;
 	signal(SIGINT, SIG_IGN);
 	pid = ft_fork(env);
 	if (pid == 0)
@@ -93,14 +95,14 @@ void	cmd_exec(t_tree *node, t_env **env)
 		return ;
 	node->fd_in = 0;
 	node->fd_out = 1;
+	cmd = ft_expand(node, *env);
+	if (!cmd && !node->redir)
+		return ;
+	if (!cmd[0] && !node->redir)
+		return ((void)exit_status(SET, 0));
 	if (open_fill_fds(node) == -1)
 		return ((void)exit_status(SET, 1));
-	cmd = ft_expand(node, *env);
-	if (!cmd)
-		return ;
-	if (!cmd[0])
-		return ((void)exit_status(SET, 0));
 	if (is_builtin(cmd[0]))
-		return ((void)exit_status(SET, execute_builtin(cmd, *env)));
+		return ((void)exit_status(SET, execute_builtin(cmd, *env, node->pipe)));
 	execute_command(cmd, *env);
 }

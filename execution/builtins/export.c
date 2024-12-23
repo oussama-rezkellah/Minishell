@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 08:41:49 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:20:52 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	export_(char *input, t_env **env)
 	const char	*err[] = {"not a valid identifier", NULL};
 
 	equals_pos = ft_strchr(input, '=');
-	if (equals_pos && ft_strlen(input) > 1)
+	if (equals_pos && ft_strlen(input) > 1 && input[0] != '=')
 	{
 		name = ft_strndup(input, equals_pos - input);
 		value = equals_pos + 1;

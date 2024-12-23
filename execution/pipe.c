@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/22 06:24:34 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:43:33 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
+	cmd->pipe = 1;
 	pid = ft_fork(env);
 	if (pid < 0)
 		return (exit(1), pid);
@@ -53,6 +54,7 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 
 	if (!cmd)
 		return (0);
+	cmd->pipe = 1;
 	pid = ft_fork(env);
 	if (pid < 0)
 		return (exit(1), pid);

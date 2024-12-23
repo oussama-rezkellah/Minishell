@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_list_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:31:31 by orezkell          #+#    #+#             */
-/*   Updated: 2024/11/03 15:02:48 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:42:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_tree	*ft_nodenew(void *content, t_redir	*redir, t_tok type)
 	new->redir = redir;
 	new->r_child = NULL;
 	new->l_child = NULL;
+	new->pipe = 0;
 	return (new);
 }
 
