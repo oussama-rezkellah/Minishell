@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/22 00:18:16 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 05:18:52 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,27 @@ int	valid_arg(char *arg, long long *exit_)
 	return (1);
 }
 
-int	exit_cmd(char **argv, int exit_status)
+int	exit_cmd(char **argv, int exit_stat)
 {
 	long long	exit_;
+	const char	*err[] = {"too many arguments",
+		"numeric argument required", NULL};
 
 	if (!argv[0])
 		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), \
-		exit(exit_status), 1);
+		printf_fd(1, "exit\n"), exit(exit_stat), 1);
 	if (valid_arg(argv[0], &exit_))
 	{
 		if (argv[1])
-			return (printf_fd(2, "exit\nminishell: exit: too many arguments\n"), \
-			ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(1), 1);
+			return (printf_fd(2, "exit\nminishell: exit: %s\n", \
+			(char *)err[0]), ft_malloc(0, CLEAR), \
+			exit_status(SET, 1), 1);
 	}
 	else
 	{
-		return (printf_fd(2, "exit\nminishell: exit: %s: numeric argument required\n", \
-		argv[0]), ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), exit(255), 1);
+		return (printf_fd(2, "exit\nminishell: exit: %s: %s\n", \
+			argv[0], (char *)err[1]), ft_malloc(0, CLEAR) \
+		, ft_malloc(0, CLEAR_ENV), exit(255), 1);
 	}
 	return (printf_fd(1, "exit\n"), exit((int)exit_ & 255), (int)exit_ & 255);
 }

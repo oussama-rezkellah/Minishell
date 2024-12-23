@@ -6,13 +6,13 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:27:14 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 01:09:31 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:46:16 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	flag_check(char *str)
+static int	flag_check(char *str)
 {
 	int	j;
 
@@ -30,6 +30,13 @@ int	flag_check(char *str)
 	return (0);
 }
 
+static void	print_args(char **arg)
+{
+	printf_fd(1, "%s", arg[0]);
+	if (arg[1])
+		printf_fd(1, " ");
+}
+
 int	echo_cmd(char **arg)
 {
 	int	i;
@@ -40,7 +47,6 @@ int	echo_cmd(char **arg)
 	if (!arg)
 		return (0);
 	i = 1;
-	// printf("here\n");
 	if (!arg[i] || !arg[i][0])
 		return (printf_fd(1, "\n"), 0);
 	while (flag_check(arg[i]))
@@ -52,9 +58,7 @@ int	echo_cmd(char **arg)
 	}
 	while (arg[i])
 	{
-		printf_fd(1, "%s", arg[i]);
-		if (arg[i + 1])
-			printf_fd(1, " ");
+		print_args(&arg[i]);
 		i++;
 	}
 	if (!flag)

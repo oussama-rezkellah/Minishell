@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 23:40:09 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:32:02 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	go_home(t_env *env)
 	return (1);
 }
 
-int go_oldpwd(t_env *env)
+int	go_oldpwd(t_env *env)
 {
 	char	*old_pwd;
 	char	*cwd;

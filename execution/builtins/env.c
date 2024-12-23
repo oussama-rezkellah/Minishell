@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:27:51 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 06:35:18 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 08:33:16 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_env_args(char **cmd)
 {
-	int ret;
+	int	ret;
 
 	ret = 1;
 	if (!access(cmd[1], F_OK))
@@ -27,15 +27,15 @@ int	handle_env_args(char **cmd)
 
 int	env_cmd(t_env *env, char **cmd)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (!env)
 		return (1);
 	if (cmd[1])
 	{
-		ret  = handle_env_args(cmd);
-		return ret;
+		ret = handle_env_args(cmd);
+		return (ret);
 	}
 	while (env)
 	{
