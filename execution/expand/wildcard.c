@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:41 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 17:35:18 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:42:18 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static char	*process_char(char *ret, char **input, int *s_q, int *d_q)
 	}
 	if (flg)
 		buffer = expand_arg(buffer);
-	printf ("buffer : %s\n", buffer);
 	return (ft_strjoin(ret, ft_strjoin(" ", buffer)));
 }
 
