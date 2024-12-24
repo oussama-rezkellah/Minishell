@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/24 11:24:38 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:49:54 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 	if (current->type == IN)
 	{
 		fd = open(current->file, O_RDONLY);
-		if (fd == -1)
-			return (handle_exec_err(current->file, errno), -1);
 		if (cmd->fd_in > 2)
 			close(cmd->fd_in);
+		if (fd == -1)
+			return (handle_exec_err(current->file, errno), -1);
 		cmd->fd_in = fd;
 	}
 	else if (current->type == HEREDOC)
