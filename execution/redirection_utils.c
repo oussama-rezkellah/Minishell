@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 20:49:04 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:45:33 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void clean_heredoc(t_tree *node)
+{
+	t_redir	*redir;
+
+	redir = node->redir;
+	while (redir)
+	{
+		if (redir->type == HEREDOC)
+			close(redir->fd);
+		redir = redir->next;
+	}
+	node->redir = NULL;
+}
 
 static int	handle_heredoc_line(char *del, int *fd, t_env *env, int flag)
 {

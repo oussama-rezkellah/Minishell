@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:41 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 17:42:18 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:35:13 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ char	*expand_arg(char *pattern)
 	return (pattern);
 }
 
+void join_char(char *tmp, char **buffer,char **input)
+{
+	tmp[0] = **input;
+	*buffer = ft_strjoin(*buffer, tmp);
+	(*input)++;
+}
+
 static char	*process_char(char *ret, char **input, int *s_q, int *d_q)
 {
 	char	*tmp;
@@ -70,9 +77,9 @@ static char	*process_char(char *ret, char **input, int *s_q, int *d_q)
 			handle_quote(s_q, d_q);
 		if (**input == '*' && !*s_q && !*d_q)
 			flg = 1;
-		tmp[0] = **input;
-		buffer = ft_strjoin(buffer, tmp);
-		(*input)++;
+		join_char(tmp, &buffer, input);
+		while (ft_isspace(**input) && (*s_q || *d_q))
+			join_char(tmp, &buffer, input);
 	}
 	if (flg)
 		buffer = expand_arg(buffer);

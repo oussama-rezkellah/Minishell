@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:19:09 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 17:37:03 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:46:15 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@ int	expand_redir(t_tree *node, t_env *env)
 {
 	t_redir	*redir;
 	char	**tmp;
+	char	*file;
 
 	redir = node->redir;
 	while (redir)
 	{
 		if (redir->type != HEREDOC)
 		{
+			file = redir->file;
 			redir->file = replace_values(&redir->file, env);
 			redir->file = ft_wildcard(&redir->file);
 			tmp = split_cmd (redir->file);
 			if (!tmp[0] || !tmp[0][0] || tmp[1])
-				return (exit_status(SET, handle_exec_err(tmp[0], -77)), \
+				return (clean_heredoc(node), exit_status(SET, handle_exec_err(file, -77)), \
 				0);
 			redir->file = remove_q_line(tmp[0]);
 		}
