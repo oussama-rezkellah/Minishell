@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 03:32:02 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:55:13 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	go_home(t_env *env)
 	cwd = ft_strdup(home);
 	if (!home)
 	{
-		printf_fd(2, "cd: HOME not set\n");
+		printf_fd(2, "minishell: cd: HOME not set\n");
 		return (0);
 	}
 	get_set_cwd(GET, NULL, &cwd);
@@ -44,20 +44,21 @@ int	go_oldpwd(t_env *env)
 	old_pwd = env_get(env, "OLDPWD");
 	if (!old_pwd)
 	{
-		printf_fd(2, "cd: OLDPWD not set\n");
-		return (0);
+		printf_fd(1, "minishell: cd: OLDPWD not set\n");
+		return (1);
 	}
 	cwd = ft_strdup(old_pwd);
 	get_set_cwd(GET, NULL, &cwd);
 	if (chdir(old_pwd) == -1)
 	{
 		perror(old_pwd);
-		return (0);
+		return (1);
 	}
 	env_set(&env, "OLDPWD", cwd);
 	env_set(&env, "PWD", old_pwd);
 	get_set_cwd(SET, old_pwd, NULL);
-	return (1);
+	printf_fd(1, "%s\n", old_pwd);
+	return (0);
 }
 
 void	handle_cd_failure(char *new, char *current_wd, t_env *env)
