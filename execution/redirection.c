@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 21:53:19 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:58:46 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 		fd = open(current->file, O_RDONLY);
 		if (fd == -1)
 			return (handle_exec_err(current->file, errno), -1);
-		if (cmd->fd_out > 2)
-			close(cmd->fd_out);
+		if (cmd->fd_in > 2)
+			close(cmd->fd_in);
 		cmd->fd_in = fd;
 	}
 	else if (current->type == HEREDOC)
@@ -78,7 +78,7 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 			return (handle_exec_err("heredoc", errno), -1);
 		if (cmd->fd_in > 2)
 			close(cmd->fd_in);
-		cmd->fd_in = dup(current->fd);
+		cmd->fd_in = current->fd;
 		close(current->fd);
 	}
 	return (1);
