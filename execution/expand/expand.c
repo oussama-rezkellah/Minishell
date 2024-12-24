@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:19:09 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 14:17:46 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:37:03 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	expand_redir(t_tree *node, t_env *env)
 		if (redir->type != HEREDOC)
 		{
 			redir->file = replace_values(&redir->file, env);
+			redir->file = ft_wildcard(&redir->file);
 			tmp = split_cmd (redir->file);
 			if (!tmp[0] || !tmp[0][0] || tmp[1])
 				return (exit_status(SET, handle_exec_err(tmp[0], -77)), \
@@ -41,6 +42,7 @@ char	**ft_expand(t_tree *node, t_env *env)
 	if (!node->p_cmd)
 		return (NULL);
 	node->p_cmd = replace_values(&node->p_cmd, env);
+	node->p_cmd = ft_wildcard(&node->p_cmd);
 	cmd = split_cmd (node->p_cmd);
 	if (!expand_redir(node, env))
 		return (NULL);

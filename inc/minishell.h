@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 23:12:39 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:41:17 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <termios.h>
 # include <sys/stat.h>
 # include <stdbool.h>
+# include <dirent.h>
 
 typedef enum e_token
 {
@@ -202,6 +203,8 @@ char		**remove_q_cmd(char **cmd);
 char		*remove_q_line(char *str);
 char		*expand_del(char *del, int *flag);
 char		*expand_heredoc(char *line, t_env *env);
+int			match_pattern(char *pattern, char *str);
+char		*ft_wildcard(char **s);
 
 // builtins
 int			is_builtin(char *cmd);
