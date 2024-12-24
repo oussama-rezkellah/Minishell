@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:13:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 10:45:33 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:03:24 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_heredoc_line(char *del, int *fd, t_env *env, int flag)
 		return (1);
 	if (!line || !ft_strcmp(line, del))
 		return (free(line), 2);
-	if (flag)
+	if (!flag)
 		newline = expand_heredoc(line, env);
 	else
 		newline = line;

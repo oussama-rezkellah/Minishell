@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 22:58:13 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:09:03 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **env)
 		sh.env->out_copy = dup(STDOUT_FILENO);
 		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env));
+		close_all_heredocs(&sh);
 		dup2(sh.env->in_copy, STDIN_FILENO);
 		dup2(sh.env->out_copy, STDOUT_FILENO);
 		close(sh.env->in_copy);

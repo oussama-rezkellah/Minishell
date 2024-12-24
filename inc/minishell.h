@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 10:46:07 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:07:19 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ int			handle_redirections(t_tree *node);
 char		*find_command_path(char *cmd, char **env);
 char		**get_paths(char **env);
 void		clean_heredoc(t_tree *node);
+int			close_all_heredocs(t_minishell *sh);
 
 //expnad
 char		*replace_values(char **str, t_env *env);

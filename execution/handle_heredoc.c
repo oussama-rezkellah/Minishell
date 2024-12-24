@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 22:58:33 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/18 03:07:33 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:06:45 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,27 @@ void	open_heredoc(t_tree *cmd, t_env *env)
 		current = current->next;
 	}
 	return ;
+}
+
+void	close_herdocs(t_tree *cmd, t_env *env)
+{
+	(void)env;
+	t_redir	*current;
+
+	current = cmd->redir;
+	while (current)
+	{
+		if (current->type == HEREDOC)
+			close(current->fd);
+		current = current->next;
+	}
+	return ;
+}
+
+int	close_all_heredocs(t_minishell *sh)
+{
+	traverse_(sh->tree, sh->env, close_herdocs);
+	return (1);
 }
 
 int	open_all_heredocs(t_minishell *sh)
