@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/24 14:15:44 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 23:46:14 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	main(int ac, char **av, char **env)
 {
 	t_minishell		sh;
 	t_data			data;
-	// struct termios	save;
+	struct termios	save;
 	char			*input;
 	extern int		rl_catch_signals;
 
 	((void)ac), ((void)av);
 	initialise_env (&sh.env, env);
 	rl_catch_signals = 0;
-	// if (isatty(0) && tcgetattr(0, &save))
-	// 	return (perror("termios"), 1);
+	if (isatty(0) && tcgetattr(0, &save))
+		return (perror("termios"), 1);
 	while (1)
 	{
 		signals_init();
@@ -51,13 +51,14 @@ int	main(int ac, char **av, char **env)
 		// sh.env->out_copy = dup(STDOUT_FILENO);
 		open_all_heredocs(&sh);
 		execution(sh.tree, &(sh.env), &data);
+		close_all_heredocs(&sh);
 		setup(FD_BACK, &data);
 		// dup2(sh.env->in_copy, STDIN_FILENO);
 		// dup2(sh.env->out_copy, STDOUT_FILENO);
 		close(data.in_copy);
 		close(data.out_copy);
-		// if (g_heredoc_signal != 1 && isatty(0) &&tcsetattr(0, TCSANOW, &save))
-		// 	perror("termios");
+		if (g_heredoc_signal != 1 && isatty(0) &&tcsetattr(0, TCSANOW, &save))
+			perror("termios");
 		ft_malloc (0, CLEAR);
 	}
 	ft_malloc (0, CLEAR_ENV);

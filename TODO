@@ -1,0 +1,18 @@
+minishell$ export x='"'
+minishell$ echo $x yassin $X
+ yassin
+
+
+minishell$ echo $x yassine $x
+ yassine
+
+
+-----------------------------------------------------
+
+export x="a b"
+
+export y=$x
+
+------------------------------------
+
+

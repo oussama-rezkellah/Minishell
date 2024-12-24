@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 23:45:32 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/24 19:49:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 22:05:19 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static char	*get_value(char *env)
 	char *value;
 
 	value = ft_strchr(env, '=');
-	if (!value || ft_strlen(value) < 2)
-		return (NULL);
+	// if (!value || ft_strlen(value) < 2)
+	// 	return (NULL);
 	return (ft_strdup_env (ft_strchr(env, '=') + 1));
 }
 

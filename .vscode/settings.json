@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"minishell.h": "c",
-		"ios": "c"
+		"ios": "c",
+		"typeinfo": "c"
 	}
 }

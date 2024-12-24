@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 08:29:04 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 19:55:13 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 23:39:06 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	go_home(t_env *env)
 	char	*cwd;
 
 	home = env_get(env, "HOME");
-	cwd = ft_strdup(home);
 	if (!home)
 	{
 		printf_fd(2, "minishell: cd: HOME not set\n");
 		return (0);
 	}
+	cwd = ft_strdup(home);
 	get_set_cwd(GET, NULL, &cwd);
 	if (chdir(home) == -1)
 	{

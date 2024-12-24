@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:41:00 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/21 06:13:21 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 22:24:03 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	pwd_cmd(void)
 		get_set_cwd(GET, NULL, &cwd);
 		if (!cwd)
 			return (perror("getcwd"), 1);
+		else
+		{
+			printf_fd(1, "%s\n", cwd);
+			return (0);
+		}
 	}
 	printf_fd(1, "%s\n", cwd);
 	return (free(cwd), 0);
