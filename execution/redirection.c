@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:05:33 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/24 10:58:46 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:24:38 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	handle_infile(t_tree *cmd, t_redir *current)
 		if (cmd->fd_in > 2)
 			close(cmd->fd_in);
 		cmd->fd_in = current->fd;
-		close(current->fd);
 	}
 	return (1);
 }
