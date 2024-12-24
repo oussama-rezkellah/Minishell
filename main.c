@@ -6,48 +6,16 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 00:17:25 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 22:58:13 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:15:44 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-# define BUFFER_SIZE 69
-
-char	*get_next_line(int fd)
-{
-	static char	buffer[BUFFER_SIZE];
-	char		line[70000];
-	static int	buffer_read;
-	static int 	buffer_pos;
-	int			i;
-
-	i = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	while (1)
-	{
-		if (buffer_pos >= buffer_read)
-		{
-			buffer_read = read(fd, buffer, BUFFER_SIZE);
-			buffer_pos = 0;
-			if (buffer_read <= 0)
-				break ;
-		}
-		if (buffer[buffer_pos] == '\n')
-			break ;
-		line[i] = buffer[buffer_pos++];
-		i++;
-	}
-	line[i] = '\0';
-	if (i == 0)
-		return (NULL);
-	return (ft_strdup(line));
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		sh;
+	t_data			data;
 	// struct termios	save;
 	char			*input;
 	extern int		rl_catch_signals;
@@ -69,22 +37,25 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		add_history(input);
-		sh.env->process_count = 0;
-		sh.env->fork_err = 0;
+		setup(INIT, &data);
+		// sh.env->process_count = 0;
+		// sh.env->fork_err = 0;
 		if (!parsing(&sh, input))
 		{
 			ft_malloc (0, CLEAR);
 			exit_status(SET, 258);
 			continue ;
 		}
-		sh.env->in_copy = dup(STDIN_FILENO);
-		sh.env->out_copy = dup(STDOUT_FILENO);
+		setup(FD_SET, &data);
+		// sh.env->in_copy = dup(STDIN_FILENO);
+		// sh.env->out_copy = dup(STDOUT_FILENO);
 		open_all_heredocs(&sh);
-		execution(sh.tree, &(sh.env));
-		dup2(sh.env->in_copy, STDIN_FILENO);
-		dup2(sh.env->out_copy, STDOUT_FILENO);
-		close(sh.env->in_copy);
-		close(sh.env->out_copy);
+		execution(sh.tree, &(sh.env), &data);
+		setup(FD_BACK, &data);
+		// dup2(sh.env->in_copy, STDIN_FILENO);
+		// dup2(sh.env->out_copy, STDOUT_FILENO);
+		close(data.in_copy);
+		close(data.out_copy);
 		// if (g_heredoc_signal != 1 && isatty(0) &&tcsetattr(0, TCSANOW, &save))
 		// 	perror("termios");
 		ft_malloc (0, CLEAR);

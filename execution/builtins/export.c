@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 22:20:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 20:44:52 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	set_or_append_env(char *name, char *value, t_mode mode, t_env **env)
 	existing = found_in_list(*env, name);
 	if (existing)
 	{
-		if (mode == APPEND_MODE && existing->value)
+	// printf("found->name[%s], found ->value[%s]\n", existing->name, existing->value);
+		if (mode == APPEND_MODE && existing->value )
 			existing->value = ft_strjoin_env(existing->value, value);
 		else if (mode == SET_MODE && existing->value && value)
-		{
 			existing->value = ft_strdup_env(value);
-		}
-		existing->env = get_full_var(name, existing->value);
+		else
+			existing->env = get_full_var(name, existing->value);
 	}
 	else
 	{
@@ -79,7 +79,7 @@ int	export_(char *input, t_env **env)
 	const char	*err[] = {"not a valid identifier", NULL};
 
 	equals_pos = ft_strchr(input, '=');
-	if (equals_pos && ft_strlen(input) > 1 && input[0] != '=')
+	if (equals_pos && input[0] != '=' && ft_strlen(input) > 1)
 	{
 		name = ft_strndup(input, equals_pos - input);
 		value = equals_pos + 1;

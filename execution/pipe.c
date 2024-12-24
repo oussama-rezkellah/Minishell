@@ -6,33 +6,34 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:37:29 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 21:43:33 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:23:41 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_fork(t_env *env)
+int	ft_fork(t_env *env, t_data *data)
 {
 	int	pid;
 
+	(void)env;
 	pid = fork();
 	if (pid < 0)
 		return (exit(1), -1);
-	env->process_count++;
-	if (env->process_count > 25)
-		env->fork_err = 1;
+	data->process_count++;
+	if (data->process_count > 25)
+		data->fork_err = 1;
 	return (pid);
 }
 
-int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
+int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env, t_data *data)
 {
 	int	pid;
 
 	if (!cmd)
 		return (0);
 	cmd->pipe = 1;
-	pid = ft_fork(env);
+	pid = ft_fork(env, data);
 	if (pid < 0)
 		return (exit(1), pid);
 	else if (pid == 0)
@@ -42,20 +43,20 @@ int	execute_l_child(t_tree *cmd, int *pipe_fd, t_env *env)
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
-		execution(cmd, &env);
+		execution(cmd, &env, data);
 		exit(exit_status(GET, 0));
 	}
 	return (pid);
 }
 
-int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
+int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env, t_data *data)
 {
 	int	pid;
 
 	if (!cmd)
 		return (0);
 	cmd->pipe = 1;
-	pid = ft_fork(env);
+	pid = ft_fork(env, data);
 	if (pid < 0)
 		return (exit(1), pid);
 	else if (pid == 0)
@@ -65,21 +66,21 @@ int	execute_r_child(t_tree *cmd, int *pipe_fd, t_env *env)
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
-		execution(cmd, &env);
+		execution(cmd, &env, data);
 		exit(exit_status(GET, 0));
 	}
 	return (pid);
 }
 
-void	pipe_exec(t_tree *node, t_env **env)
+void	pipe_exec(t_tree *node, t_env **env, t_data *data)
 {
 	int (l_child), (r_child), (pipe_fd[2]), (status);
 	if (pipe(pipe_fd) < 0)
 		return ;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	l_child = execute_l_child(node->l_child, pipe_fd, *env);
-	r_child = execute_r_child(node->r_child, pipe_fd, *env);
+	l_child = execute_l_child(node->l_child, pipe_fd, *env, data);
+	r_child = execute_r_child(node->r_child, pipe_fd, *env, data);
 	if (l_child < 0 || r_child < 0)
 		return ;
 	close(pipe_fd[0]);

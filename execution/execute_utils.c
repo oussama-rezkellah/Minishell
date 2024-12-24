@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 05:29:29 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 14:45:49 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:42:20 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,10 @@ char	*find_command_path(char *cmd, char **env)
 		return (full_path);
 	paths = get_paths(env);
 	if (!ft_strcmp(paths[0], "\200"))
-		return (handle_exec_err(cmd, ENOENT), ft_strdup("\200\0"));
-	if (!paths)
 	{
-		if (access(cmd, F_OK) == 0)
+		if (access(ft_strjoin("./", cmd), X_OK) == 0)
 			return (ft_strdup(cmd));
-		return (NULL);
+		return (handle_exec_err(cmd, ENOENT), ft_strdup("\200\0"));
 	}
 	i = -1;
 	while (paths[++i])

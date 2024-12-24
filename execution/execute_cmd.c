@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 13:18:01 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 17:40:40 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	handle_child_status(int status)
 	exit_status(SET, status);
 }
 
-static void	execute_command(char **cmd, t_env *env)
+static void	execute_command(char **cmd, t_env *env, t_data *data)
 {
 	int	pid;
 	int	status;
@@ -76,7 +76,7 @@ static void	execute_command(char **cmd, t_env *env)
 	if (!cmd[0])
 		return ;
 	signal(SIGINT, SIG_IGN);
-	pid = ft_fork(env);
+	pid = ft_fork(env, data);
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -87,7 +87,7 @@ static void	execute_command(char **cmd, t_env *env)
 	handle_child_status(status);
 }
 
-void	cmd_exec(t_tree *node, t_env **env)
+void	cmd_exec(t_tree *node, t_env **env, t_data *data)
 {
 	char	**cmd;
 
@@ -104,5 +104,5 @@ void	cmd_exec(t_tree *node, t_env **env)
 		return ((void)exit_status(SET, execute_builtin(cmd, env, node->pipe)));
 	if (!cmd[0])
 		return ((void)exit_status(SET, 0));
-	execute_command(cmd, *env);
+	execute_command(cmd, *env, data);
 }

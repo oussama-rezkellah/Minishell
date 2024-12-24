@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 12:53:27 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:11:59 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,12 @@ typedef struct s_env
 	char			*name;
 	char			*value;
 	struct s_env	*next;
-	int				in_copy;
-	int				out_copy;
-	int				process_count;
-	int				fork_err;
+	// int				in_copy;
+	// int				out_copy;
+	// int				process_count;
+	// int				fork_err;
 }	t_env;
+
 
 typedef struct s_minishell
 {
@@ -118,6 +119,22 @@ typedef struct s_minishell
 	t_tree		*tree;
 	int			exit_status;
 }	t_minishell;
+
+typedef enum s_flag
+{
+	FD_SET,
+	FD_BACK,
+	INIT,
+}			t_flag;
+
+typedef struct s_data
+{
+	int				in_copy;
+	int				out_copy;
+	int				process_count;
+	int				fork_err;
+
+}				t_data;
 
 int			g_heredoc_signal;
 
@@ -184,9 +201,9 @@ t_tree		*pop_s(t_stack	**stack);
 
 int			parsing(t_minishell *sh, char *input);
 // execution
-void		execution(t_tree *node, t_env **env);
-void		pipe_exec(t_tree *node, t_env **env);
-void		cmd_exec(t_tree *node, t_env **env);
+void		execution(t_tree *node, t_env **env, t_data *data);
+void		pipe_exec(t_tree *node, t_env **env, t_data *data);
+void		cmd_exec(t_tree *node, t_env **env, t_data *data);
 int			open_fill_fds(t_tree *cmd);
 int			handle_exec_err(char *cmd, int errno_val);
 int			open_all_heredocs(t_minishell *sh);
@@ -209,7 +226,7 @@ char		*ft_wildcard(char **s);
 
 // builtins
 int			is_builtin(char *cmd);
-int			execute_builtin(char **cmd, t_env *env, int pipe);
+int			execute_builtin(char **cmd, t_env **env, int pipe);
 void		get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd);
 int			is_valid_name(char *name);
 int			export_cmd(char **argv, t_env **env);
@@ -219,6 +236,7 @@ int			pwd_cmd(void);
 int			env_cmd(t_env *env, char **cmd);
 int			exit_cmd(char **argv, int exit_status, int pipe);
 int			unset_cmd(t_env **env, char **argv);
-int			ft_fork(t_env *env);
+int			ft_fork(t_env *env, t_data *data);
+void		setup(t_flag flag, t_data *data);
 
 #endif
