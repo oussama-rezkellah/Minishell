@@ -6,7 +6,7 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:27:31 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 17:35:34 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 09:16:36 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_tree
 	char			*p_cmd;
 	int				fd_in;
 	int				fd_out;
+	int				pipe;
 	t_redir			*redir;
 	struct s_tree	*l_child;
 	struct s_tree	*r_child;
@@ -207,7 +208,7 @@ char		*ft_wildcard(char **s);
 
 // builtins
 int			is_builtin(char *cmd);
-int			execute_builtin(char **cmd, t_env *env);
+int			execute_builtin(char **cmd, t_env *env, int pipe);
 void		get_set_cwd(t_exit mode, char *new_cwd, char **old_cwd);
 int			is_valid_name(char *name);
 int			export_cmd(char **argv, t_env **env);
@@ -215,7 +216,7 @@ int			echo_cmd(char **arguments);
 int			cd_cmd(t_env *env, char **argv);
 int			pwd_cmd(void);
 int			env_cmd(t_env *env, char **cmd);
-int			exit_cmd(char **argv, int exit_status);
+int			exit_cmd(char **argv, int exit_status, int pipe);
 int			unset_cmd(t_env **env, char **argv);
 int			ft_fork(t_env *env);
 

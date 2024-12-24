@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 05:18:52 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:01:50 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	valid_arg(char *arg, long long *exit_)
 {
 	int	err;
 
+	if (!*arg)
+		return (0);
 	err = 0;
 	*exit_ = ft_atol(arg, &err);
 	if (err)
@@ -51,12 +53,13 @@ int	valid_arg(char *arg, long long *exit_)
 	return (1);
 }
 
-int	exit_cmd(char **argv, int exit_stat)
+int	exit_cmd(char **argv, int exit_stat, int pipe)
 {
 	long long	exit_;
 	const char	*err[] = {"too many arguments",
 		"numeric argument required", NULL};
-
+	if (pipe)
+		return (0);
 	if (!argv[0])
 		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), \
 		printf_fd(1, "exit\n"), exit(exit_stat), 1);

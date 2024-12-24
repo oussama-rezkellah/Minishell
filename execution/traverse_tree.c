@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:19:20 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/23 05:50:47 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:01:34 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(char **cmd, t_env *env)
+int	execute_builtin(char **cmd, t_env *env, int pipe)
 {
 	int	exit_;
 
@@ -45,15 +45,22 @@ int	execute_builtin(char **cmd, t_env *env)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		exit_ = (unset_cmd(&env, cmd + 1));
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		exit_ = (exit_cmd(cmd + 1, exit_status(GET, 0)));
+		exit_ = (exit_cmd(cmd + 1, exit_status(GET, 0), pipe));
 	else
 		exit_ = (1);
 	return (exit_);
+}
+void	restore_dfl(t_env *env)
+{
+	dup2(env->out_copy, STDOUT_FILENO);
+	dup2(env->in_copy, STDIN_FILENO);
 }
 
 void	or_exec(t_tree *node, t_env **env)
 {
 	execution (node->l_child, env);
+	if (node->pipe == 0)
+		restore_dfl(*env);
 	if (exit_status(GET, 0))
 		return (execution(node->r_child, env));
 }
@@ -61,6 +68,8 @@ void	or_exec(t_tree *node, t_env **env)
 void	and_exec(t_tree *node, t_env **env)
 {
 	execution (node->l_child, env);
+	if (node->pipe == 0)
+		restore_dfl(*env);
 	if (!exit_status(GET, 0))
 		return (execution(node->r_child, env));
 }
