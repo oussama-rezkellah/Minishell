@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:08:46 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 10:52:59 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:18:01 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void	cmd_exec(t_tree *node, t_env **env)
 	cmd = ft_expand(node, *env);
 	if (!cmd && !node->redir)
 		return ;
-	if (!cmd[0] && !node->redir)
-		return ((void)exit_status(SET, 0));
 	if (open_fill_fds(node) == -1)
 		return (clean_heredoc(node), (void)exit_status(SET, 1));
 	if (is_builtin(cmd[0]))
-		return ((void)exit_status(SET, execute_builtin(cmd, *env, node->pipe)));
+		return ((void)exit_status(SET, execute_builtin(cmd, env, node->pipe)));
+	if (!cmd[0])
+		return ((void)exit_status(SET, 0));
 	execute_command(cmd, *env);
 }
