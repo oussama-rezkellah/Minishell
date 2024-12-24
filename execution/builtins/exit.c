@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 19:00:36 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/25 00:52:25 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ long long	ft_atol(const char *str, int *err)
 	return ((int)ret * sign);
 }
 
-void p_exit(int pipe)
+void	p_exit(int pipe)
 {
 	if (!pipe)
 		printf_fd(1, "exit\n");
@@ -64,6 +64,7 @@ int	exit_cmd(char **argv, int exit_stat, int pipe)
 	long long	exit_;
 	const char	*err[] = {"too many arguments",
 		"numeric argument required", NULL};
+
 	if (!argv[0])
 		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), \
 		p_exit(pipe), exit(exit_stat), 1);
@@ -76,7 +77,7 @@ int	exit_cmd(char **argv, int exit_stat, int pipe)
 	}
 	else
 	{
-		return (p_exit(pipe),printf_fd(2, "minishell: exit: %s: %s\n", \
+		return (p_exit(pipe), printf_fd(2, "minishell: exit: %s: %s\n", \
 			argv[0], (char *)err[1]), ft_malloc(0, CLEAR) \
 		, ft_malloc(0, CLEAR_ENV), exit(255), 1);
 	}

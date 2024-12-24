@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:07:26 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 13:13:06 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/25 00:53:06 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ int	env_unset(t_env **env_list, const char *name)
 			if (prev)
 				prev->next = current->next;
 			else
-			{
 				*env_list = current->next;
-				printf ("here\n");
-				printf ("%s %s\n",(*env_list)->name ,current->next->name );
-			}
 			return (0);
 		}
 		prev = current;

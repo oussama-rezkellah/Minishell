@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 14:22:12 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/24 23:24:46 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/25 00:47:11 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	set_or_append_env(char *name, char *value, t_mode mode, t_env **env)
 	existing = found_in_list(*env, name);
 	if (existing)
 	{
-		if (mode == APPEND_MODE && existing->value )
+		if (mode == APPEND_MODE && existing->value && value)
 			existing->value = ft_strjoin_env(existing->value, value);
 		else if (mode == SET_MODE && existing->value && value)
 			existing->value = ft_strdup_env(value);
-		else if (mode == SET_MODE && value && !existing->value)
+		else if (value && !existing->value)
 			existing->value = ft_strdup_env(value);
 		existing->env = get_full_var(name, existing->value);
 	}
