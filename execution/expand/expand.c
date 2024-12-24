@@ -6,11 +6,25 @@
 /*   By: orezkell <orezkell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:19:09 by orezkell          #+#    #+#             */
-/*   Updated: 2024/12/24 09:18:54 by orezkell         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:36:42 by orezkell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void clean_heredoc(t_tree *node)
+{
+	t_redir	*redir;
+
+	redir = node->redir;
+	while (redir)
+	{
+		if (redir->type == HEREDOC)
+			close(redir->fd);
+		redir = redir->next;
+	}
+	node->redir = NULL;
+}
 
 int	expand_redir(t_tree *node, t_env *env)
 {
@@ -28,7 +42,7 @@ int	expand_redir(t_tree *node, t_env *env)
 			redir->file = ft_wildcard(&redir->file);
 			tmp = split_cmd (redir->file);
 			if (!tmp[0] || !tmp[0][0] || tmp[1])
-				return (node->redir = NULL, exit_status(SET, handle_exec_err(file, -77)), \
+				return (clean_heredoc(node), exit_status(SET, handle_exec_err(file, -77)), \
 				0);
 			redir->file = remove_q_line(tmp[0]);
 		}
