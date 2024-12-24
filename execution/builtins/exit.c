@@ -6,7 +6,7 @@
 /*   By: aben-hss <aben-hss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:50:20 by aben-hss          #+#    #+#             */
-/*   Updated: 2024/12/23 23:01:50 by aben-hss         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:00:36 by aben-hss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ long long	ft_atol(const char *str, int *err)
 	return ((int)ret * sign);
 }
 
+void p_exit(int pipe)
+{
+	if (!pipe)
+		printf_fd(1, "exit\n");
+}
+
 int	valid_arg(char *arg, long long *exit_)
 {
 	int	err;
@@ -58,23 +64,21 @@ int	exit_cmd(char **argv, int exit_stat, int pipe)
 	long long	exit_;
 	const char	*err[] = {"too many arguments",
 		"numeric argument required", NULL};
-	if (pipe)
-		return (0);
 	if (!argv[0])
 		return (ft_malloc(0, CLEAR), ft_malloc(0, CLEAR_ENV), \
-		printf_fd(1, "exit\n"), exit(exit_stat), 1);
+		p_exit(pipe), exit(exit_stat), 1);
 	if (valid_arg(argv[0], &exit_))
 	{
 		if (argv[1])
-			return (printf_fd(2, "exit\nminishell: exit: %s\n", \
+			return (p_exit(pipe), printf_fd(2, "minishell: exit: %s\n", \
 			(char *)err[0]), ft_malloc(0, CLEAR), \
 			exit_status(SET, 1), 1);
 	}
 	else
 	{
-		return (printf_fd(2, "exit\nminishell: exit: %s: %s\n", \
+		return (p_exit(pipe),printf_fd(2, "minishell: exit: %s: %s\n", \
 			argv[0], (char *)err[1]), ft_malloc(0, CLEAR) \
 		, ft_malloc(0, CLEAR_ENV), exit(255), 1);
 	}
-	return (printf_fd(1, "exit\n"), exit((int)exit_ & 255), (int)exit_ & 255);
+	return (p_exit(pipe), exit((int)exit_ & 255), (int)exit_ & 255);
 }
